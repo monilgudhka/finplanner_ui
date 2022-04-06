@@ -11,6 +11,7 @@ import { HomeComponent } from './dashboard/home/home.component';
 import { AnalysisComponent } from './dashboard/analysis/analysis.component';
 import { InvestmentsComponent } from './dashboard/investments/investments.component';
 import { MembersComponent } from './dashboard/members/members.component';
+import { FamilyService } from './shared/service/family.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MembersComponent } from './dashboard/members/members.component';
   ],
   providers: [
     AuthService,
-    AuthGuardService
+    AuthGuardService,
+    FamilyService
   ],
   bootstrap: [AppComponent]
 })
