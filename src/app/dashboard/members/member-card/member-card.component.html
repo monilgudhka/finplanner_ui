@@ -1,0 +1,15 @@
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{ member.getName() }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            <p>Last updated on {{ member.getGrowth().getLastUpdated() }}</p>
+        </h6>
+        <ul class="card-text">
+            <li>Amount Invested:- {{ member.getGrowth().getInvestmentAmount() }}</li>
+            <li>Absolute Returns:- {{ member.getGrowth().getAbsoluteReturns() }} ({{
+                member.getGrowth().getAbsoluteReturnsPercentage() }}%)</li>
+            <li>XIRR:- {{ member.getGrowth().getRateOfReturn() }}%</li>
+        </ul>
+        <a class="card-link" [routerLink]="['../','investments']">Investments</a>
+    </div>
+</div>

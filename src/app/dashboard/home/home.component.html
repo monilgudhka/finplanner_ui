@@ -6,9 +6,9 @@
         <h4>Net Worth:- {{ growth.getCurrentAmount() }}</h4>
         <ul>
             <li>Amount Invested:- {{ growth.getInvestmentAmount() }}</li>
-            <li>Absolute Returns:- {{ getAbsoluteReturns() }} ({{ getAbsoluteReturnsPercentage() }}%)</li>
+            <li>Absolute Returns:- {{ growth.getAbsoluteReturns() }} ({{ growth.getAbsoluteReturnsPercentage() }}%)</li>
             <li>XIRR:- {{ growth.getRateOfReturn() }}%</li>
         </ul>
-        <p>Last updated on {{ growth.getLastUpdated().toDateString() }}</p>
+        <p>Last updated on {{ growth.getLastUpdated() }}</p>
     </div>
 </div>

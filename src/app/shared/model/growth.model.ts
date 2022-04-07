@@ -19,7 +19,15 @@ export class Growth {
         return this.rateOfReturn;
     }
 
-    getLastUpdated(): Date {
-        return this.lastUpdated;
+    getLastUpdated(): string {
+        return this.lastUpdated.toDateString();
+    }
+
+    getAbsoluteReturns(): number {
+        return this.currentAmount - this.investedAmount;
+    }
+
+    getAbsoluteReturnsPercentage(): number {
+        return Math.floor(((this.currentAmount / this.investedAmount) - 1) * 100);
     }
 }

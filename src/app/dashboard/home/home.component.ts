@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Family } from 'src/app/shared/model/family.model';
 import { Growth } from 'src/app/shared/model/growth.model';
 import { FamilyService } from 'src/app/shared/service/family.service';
 
@@ -13,16 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private familyService: FamilyService) { }
 
   ngOnInit(): void {
-    const family: Family = <Family>this.familyService.getFamily();
-    this.growth = family.getGrowth();
-  }
-
-  getAbsoluteReturns(): number {
-    return this.growth.getCurrentAmount() - this.growth.getInvestmentAmount();
-  }
-
-  getAbsoluteReturnsPercentage(): number {
-    return Math.floor(((this.growth.getCurrentAmount() / this.growth.getInvestmentAmount()) - 1) * 100);
+    this.growth = this.familyService.getFamily().getGrowth();
   }
 
 }

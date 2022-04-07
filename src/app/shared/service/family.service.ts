@@ -5,7 +5,7 @@ import { Member } from "../model/member.model";
 
 export class FamilyService {
 
-    private family: Family | undefined;
+    private family: Family;
     private loginId: string = '';
 
     loadDetails(loginId: string): boolean {
@@ -20,7 +20,7 @@ export class FamilyService {
         }
     }
 
-    getFamily(): Family | undefined {
+    getFamily(): Family {
         return this.family;
     }
 

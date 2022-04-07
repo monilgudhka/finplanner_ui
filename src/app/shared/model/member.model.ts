@@ -10,11 +10,19 @@ export class Member {
         private growth: Growth,
     ) { }
 
-    getId() {
+    getId(): number {
         return this.id;
+    }
+
+    getName(): string {
+        return this.name;
     }
 
     addInvestment(investment: Investment) {
         this.investmentList.push(investment);
+    }
+
+    getGrowth(): Growth {
+        return this.growth;
     }
 }

@@ -23,4 +23,8 @@ export class Family {
     addInvestment(investment: Investment) {
         this.investmentList.push(investment);
     }
+
+    getAllMembers(): Array<Member> {
+        return this.memberList;
+    }
 }
