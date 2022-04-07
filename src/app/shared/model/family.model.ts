@@ -11,4 +11,16 @@ export class Family {
         private loginId: string,
         private growth: Growth,
     ) { }
+
+    getGrowth(): Growth {
+        return this.growth;
+    }
+
+    addMember(member: Member) {
+        this.memberList.push(member);
+    }
+
+    addInvestment(investment: Investment) {
+        this.investmentList.push(investment);
+    }
 }

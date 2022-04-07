@@ -10,4 +10,11 @@ export class Member {
         private growth: Growth,
     ) { }
 
+    getId() {
+        return this.id;
+    }
+
+    addInvestment(investment: Investment) {
+        this.investmentList.push(investment);
+    }
 }
