@@ -27,4 +27,8 @@ export class Family {
     getAllMembers(): Array<Member> {
         return this.memberList;
     }
+
+    getAllInvestments(): Array<Investment> {
+        return this.investmentList;
+    }
 }

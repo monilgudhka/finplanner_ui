@@ -12,4 +12,32 @@ export class Investment {
         private member: Member,
         private growth: Growth,
     ) { }
+
+    getTitle(): string {
+        return this.title;
+    }
+
+    getAssetType(): string {
+        return this.assetType;
+    }
+
+    getAssetClass(): string {
+        return this.assetClass;
+    }
+
+    getLiquidity(): string {
+        return this.liquidity;
+    }
+
+    getGoalTerm(): string {
+        return this.goalTerm;
+    }
+
+    getMember(): Member {
+        return this.member;
+    }
+
+    getGrowth(): Growth {
+        return this.growth;
+    }
 }

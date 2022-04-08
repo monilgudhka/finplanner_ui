@@ -1,1 +1,64 @@
-<p>investments works!</p>
+<table mat-table [dataSource]="investmentList" class="mat-elevation-z8">
+    <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.title}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="goalTerm">
+        <th mat-header-cell *matHeaderCellDef> Goal Term </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.goalTerm}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="assetClass">
+        <th mat-header-cell *matHeaderCellDef> Asset Class </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.assetClass}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="assetType">
+        <th mat-header-cell *matHeaderCellDef> Asset Type </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.assetType}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="liquidity">
+        <th mat-header-cell *matHeaderCellDef> Liquidity </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.liquidity}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="member">
+        <th mat-header-cell *matHeaderCellDef> Member </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.member.getName()}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="investedAmount">
+        <th mat-header-cell *matHeaderCellDef> Invested Amount </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.growth.getInvestmentAmount()}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="currentAmount">
+        <th mat-header-cell *matHeaderCellDef> Current Value </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.growth.getCurrentAmount()}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rateOfReturn">
+        <th mat-header-cell *matHeaderCellDef> XIRR </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.growth.getRateOfReturn()}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="absoluteReturns">
+        <th mat-header-cell *matHeaderCellDef> Absolute Returns </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.growth.getAbsoluteReturns()}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="absoluteReturnsPercentage">
+        <th mat-header-cell *matHeaderCellDef> Absolute Returns(%) </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.growth.getAbsoluteReturnsPercentage()}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastUpdated">
+        <th mat-header-cell *matHeaderCellDef> Last Updated </th>
+        <td mat-cell *matCellDef="let investment"> {{investment.growth.getLastUpdated()}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+</table>
