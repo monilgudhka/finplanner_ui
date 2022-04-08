@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FamilyService } from 'src/app/shared/service/family.service';
 
 @Component({
   selector: 'app-member-add',
   templateUrl: './member-add.component.html'
 })
-export class MemberAddComponent implements OnInit {
+export class MemberAddComponent {
+  @ViewChild('memberName') memberName: ElementRef;
 
-  constructor() { }
+  constructor(private familyService: FamilyService) { }
 
-  ngOnInit(): void {
+  onAddMember() {
+    this.familyService.createMember(this.memberName.nativeElement.value);
+    this.memberName.nativeElement.value = '';
   }
 
 }

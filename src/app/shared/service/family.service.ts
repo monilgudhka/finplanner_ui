@@ -64,4 +64,10 @@ export class FamilyService {
             new Date(data['last_updated'])
         );
     }
+
+    createMember(name: string) {
+        // TODO: Call backend to add member
+        const member: Member = new Member(4, name, new Growth(4, 0, 0, 0, new Date()));
+        this.family.addMember(member);
+    }
 }

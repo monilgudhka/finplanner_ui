@@ -7,7 +7,7 @@ import { AuthService } from '../shared/service/auth.service';
   templateUrl: './signin.component.html'
 })
 export class SigninComponent {
-  @ViewChild('loginId') loginId!: ElementRef;
+  @ViewChild('loginId') loginId: ElementRef;
 
   constructor(
     private authService: AuthService,
