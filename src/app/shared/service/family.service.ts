@@ -2,6 +2,7 @@ import { Family } from "../model/family.model";
 import { Growth } from "../model/growth.model";
 import { Investment } from "../model/investment.model";
 import { Member } from "../model/member.model";
+import { NewInvestment } from "../model/new-investment.model";
 
 export class FamilyService {
 
@@ -69,5 +70,13 @@ export class FamilyService {
         // TODO: Call backend to add member
         const member: Member = new Member(4, name, new Growth(4, 0, 0, 0, new Date()));
         this.family.addMember(member);
+    }
+
+    createInvestment(memberId: number, newInvestment: NewInvestment) {
+        // TODO: Call backend to add member
+        const member: Member = this.family.getAllMembers()
+            .filter(m => m.getId() == memberId)[0];
+        const investment: Investment = new Investment(5, newInvestment.title, newInvestment.assetType, 'EQUITY', 'LIQUID', newInvestment.goalTerm, member, new Growth(5, 0, 0, 0, new Date()));
+        this.family.addInvestment(investment);
     }
 }
