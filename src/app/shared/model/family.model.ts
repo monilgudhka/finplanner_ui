@@ -31,4 +31,12 @@ export class Family {
     getAllInvestments(): Array<Investment> {
         return this.investmentList;
     }
+
+    getMember(id: number): Member {
+        return this.memberList.filter(m => m.getId() === id)[0];
+    }
+
+    getInvestment(id: number): Investment {
+        return this.investmentList.filter(iv => iv.getId() === id)[0];
+    }
 }

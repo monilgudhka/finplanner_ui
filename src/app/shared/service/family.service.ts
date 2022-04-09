@@ -13,6 +13,7 @@ export class FamilyService {
         if (loginId === this.loginId) {
             return true;
         } else if (loginId === 'family_a') {
+            // TODO: Call backend to fetch data
             this.loadMockData();
             this.loginId = loginId;
             return true;
@@ -73,10 +74,13 @@ export class FamilyService {
     }
 
     createInvestment(memberId: number, newInvestment: NewInvestment) {
-        // TODO: Call backend to add member
-        const member: Member = this.family.getAllMembers()
-            .filter(m => m.getId() == memberId)[0];
+        // TODO: Call backend to add investment
+        const member: Member = this.family.getMember(memberId);
         const investment: Investment = new Investment(5, newInvestment.title, newInvestment.assetType, 'EQUITY', 'LIQUID', newInvestment.goalTerm, member, new Growth(5, 0, 0, 0, new Date()));
         this.family.addInvestment(investment);
+    }
+
+    updateGrowth(growth: Growth) {
+        // TODO: Call backend to update Growth
     }
 }

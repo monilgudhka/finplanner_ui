@@ -1,1 +1,53 @@
-<p>investment-edit works!</p>
+<div class="row">
+    <div class="col-xs-12">
+        <h4>{{ investment.getTitle() }}</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <ul>
+            <li>Asset Type: {{ investment.getAssetType() }}</li>
+            <li>Asset Class: {{ investment.getAssetClass() }}</li>
+            <li>Liquidity: {{ investment.getLiquidity() }}</li>
+            <li>Goal Term: {{ investment.getGoalTerm() }}</li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Invested Amount</mat-label>
+                        <input matInput type="number" placeholder="0" formControlName="investedAmount">
+                        <span matPrefix>
+                            <mat-icon>currency_rupee</mat-icon>
+                        </span>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Current Amount</mat-label>
+                        <input matInput type="number" placeholder="0" formControlName="currentAmount">
+                        <span matPrefix>
+                            <mat-icon>currency_rupee</mat-icon>
+                        </span>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="submit" mat-raised-button color="primary"
+                        [disabled]="!this.editForm.valid">Update</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

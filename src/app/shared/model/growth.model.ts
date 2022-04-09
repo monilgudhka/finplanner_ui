@@ -30,4 +30,12 @@ export class Growth {
     getAbsoluteReturnsPercentage(): number {
         return Math.floor(((this.currentAmount / this.investedAmount) - 1) * 100);
     }
+
+    setInvestmentAmount(amount: number) {
+        this.investedAmount = amount;
+    }
+
+    setCurrentAmount(amount: number) {
+        this.currentAmount = amount;
+    }
 }
