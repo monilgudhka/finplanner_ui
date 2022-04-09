@@ -18,6 +18,7 @@ import { MemberCardComponent } from './dashboard/members/member-card/member-card
 import { MemberAddComponent } from './dashboard/members/member-add/member-add.component';
 import { MaterialModule } from './material.module';
 import { NewInvestmentComponent } from './dashboard/investments/new-investment/new-investment.component';
+import { InvestmentEditComponent } from './dashboard/investments/investment-edit/investment-edit.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NewInvestmentComponent } from './dashboard/investments/new-investment/n
     NewInvestmentComponent,
     MembersComponent,
     MemberCardComponent,
-    MemberAddComponent
+    MemberAddComponent,
+    InvestmentEditComponent
   ],
   imports: [
     BrowserModule,

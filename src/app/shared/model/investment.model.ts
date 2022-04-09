@@ -13,6 +13,10 @@ export class Investment {
         private growth: Growth,
     ) { }
 
+    getId(): number {
+        return this.id;
+    }
+
     getTitle(): string {
         return this.title;
     }

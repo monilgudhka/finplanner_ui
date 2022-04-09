@@ -8,6 +8,7 @@ import { InvestmentsComponent } from './dashboard/investments/investments.compon
 import { MembersComponent } from './dashboard/members/members.component';
 import { AuthGuardService } from './shared/service/authguard.service';
 import { SigninComponent } from './signin/signin.component';
+import { InvestmentEditComponent } from './dashboard/investments/investment-edit/investment-edit.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'analysis', component: AnalysisComponent },
       { path: 'investments/new', component: NewInvestmentComponent },
+      { path: 'investments/:id/edit', component: InvestmentEditComponent },
       { path: 'investments', component: InvestmentsComponent },
       { path: 'members', component: MembersComponent }
     ]
