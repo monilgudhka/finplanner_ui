@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NewInvestmentDto } from 'src/app/shared/dto/new-investment-dto.model';
 import { Member } from 'src/app/shared/model/member.model';
-import { NewInvestment } from 'src/app/shared/model/new-investment.model';
 import { FamilyService } from 'src/app/shared/service/family.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { FamilyService } from 'src/app/shared/service/family.service';
   templateUrl: './new-investment.component.html'
 })
 export class NewInvestmentComponent implements OnInit {
-  assetTypeList: Array<string> = ['MID_CAP', 'LARGE_CAP'];
-  goalTermList: Array<string> = ['SHORT', 'LONG'];
+  assetTypeList: Array<string> = ['LARGE_CAP_EQUITY', 'MID_CAP_EQUITY'];
+  goalTermList: Array<string> = ['SHORT_TERM', 'LONG_TERM'];
   memberList: Array<Member>;
 
   newInvestmentForm: FormGroup;
@@ -30,10 +30,10 @@ export class NewInvestmentComponent implements OnInit {
 
   onSubmit() {
     const member_id: number = this.newInvestmentForm.value.member;
-    const newInvestment: NewInvestment = new NewInvestment();
+    const newInvestment: NewInvestmentDto = new NewInvestmentDto();
     newInvestment.title = this.newInvestmentForm.value.title;
-    newInvestment.goalTerm = this.newInvestmentForm.value.goalTerm;
-    newInvestment.assetType = this.newInvestmentForm.value.assetType;
+    newInvestment.goal_term = this.newInvestmentForm.value.goalTerm;
+    newInvestment.asset_type = this.newInvestmentForm.value.assetType;
 
     this.familyService.createInvestment(member_id, newInvestment);
     this.resetForm();

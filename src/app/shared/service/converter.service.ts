@@ -45,7 +45,7 @@ export class ConverterService {
         }
     }
 
-    private static toMember(memberDto: MemberDto): Member {
+    public static toMember(memberDto: MemberDto): Member {
         return new Member(
             memberDto.id,
             memberDto.name,
@@ -53,7 +53,7 @@ export class ConverterService {
         );
     }
 
-    private static toInvestment(investmentDto: InvestmentDto, member: Member): Investment {
+    public static toInvestment(investmentDto: InvestmentDto, member: Member): Investment {
         return new Investment(
             investmentDto.id,
             investmentDto.title,
