@@ -19,6 +19,8 @@ import { MemberAddComponent } from './dashboard/members/member-add/member-add.co
 import { MaterialModule } from './material.module';
 import { NewInvestmentComponent } from './dashboard/investments/new-investment/new-investment.component';
 import { InvestmentEditComponent } from './dashboard/investments/investment-edit/investment-edit.component';
+import { HttpClientModule } from '@angular/common/http';
+import { BackendService } from './shared/service/backend.service';
 
 @NgModule({
   declarations: [
@@ -39,12 +41,14 @@ import { InvestmentEditComponent } from './dashboard/investments/investment-edit
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [
     AuthService,
     AuthGuardService,
-    FamilyService
+    FamilyService,
+    BackendService
   ],
   bootstrap: [AppComponent]
 })
