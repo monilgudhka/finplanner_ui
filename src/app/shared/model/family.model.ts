@@ -12,6 +12,10 @@ export class Family {
         private growth: Growth,
     ) { }
 
+    getLoginId(): string {
+        return this.loginId;
+    }
+
     getGrowth(): Growth {
         return this.growth;
     }

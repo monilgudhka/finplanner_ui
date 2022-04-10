@@ -10,13 +10,13 @@ import { Member } from "../model/member.model";
 export class ConverterService {
 
     public static convert(familyDto: FamilyDto): Family {
-        const family = new Family(familyDto.id, familyDto.login_id, this.toGrowth(familyDto.growth));
+        const family = new Family(familyDto.id, familyDto.login_id, ConverterService.toGrowth(familyDto.growth));
 
         if (familyDto.members) {
-            const memberMap: Map<number, Member> = this.allMembers(family, familyDto.members);
+            const memberMap: Map<number, Member> = ConverterService.allMembers(family, familyDto.members);
 
             if (familyDto.investments) {
-                this.allInvestments(family, memberMap, familyDto.investments);
+                ConverterService.allInvestments(family, memberMap, familyDto.investments);
             }
         }
 
@@ -26,7 +26,7 @@ export class ConverterService {
     private static allMembers(family: Family, members: MemberDto[]): Map<number, Member> {
         const memberMap: Map<number, Member> = new Map();
         for (let memberDto of members) {
-            const member = this.toMember(memberDto);
+            const member = ConverterService.toMember(memberDto);
             memberMap.set(member.getId(), member);
             family.addMember(member);
         }
@@ -39,7 +39,7 @@ export class ConverterService {
             if (member == undefined) {
                 continue;
             }
-            const investment = this.toInvestment(investmentDto, member);
+            const investment = ConverterService.toInvestment(investmentDto, member);
             member.addInvestment(investment);
             family.addInvestment(investment);
         }
@@ -49,7 +49,7 @@ export class ConverterService {
         return new Member(
             memberDto.id,
             memberDto.name,
-            this.toGrowth(memberDto.growth)
+            ConverterService.toGrowth(memberDto.growth)
         );
     }
 
@@ -62,7 +62,7 @@ export class ConverterService {
             investmentDto.liquidity,
             investmentDto.goal_term,
             member,
-            this.toGrowth(investmentDto.growth)
+            ConverterService.toGrowth(investmentDto.growth)
         );
     }
 

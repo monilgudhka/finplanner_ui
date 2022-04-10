@@ -15,7 +15,7 @@ export class DashboardComponent {
 
   onSignOut() {
     this.authService.signOut();
-    this.router.navigate(['/']);
+    this.router.navigate(['/signin']);
   }
 
 }
