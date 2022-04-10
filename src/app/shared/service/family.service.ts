@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
-import { from, map, Observable } from "rxjs";
+import { from, map, mergeMap, Observable } from "rxjs";
 import { Family } from "../model/family.model";
 import { Growth } from "../model/growth.model";
 import { Member } from "../model/member.model";
 import { NewInvestmentDto } from "../dto/new-investment-dto.model";
 import { BackendService } from "./backend.service";
+import { Investment } from "../model/investment.model";
+import { UpdateGrowthDto } from "../dto/update-growth-dto.model";
 
 @Injectable()
 export class FamilyService {
@@ -34,17 +36,28 @@ export class FamilyService {
     createMember(name: string) {
         this.backendService
             .createMember(this.family.getId(), name)
-            .subscribe(this.family.addMember);
+            .subscribe(member => {
+                this.family.addMember(member);
+            });
     }
 
     createInvestment(memberId: number, newInvestmentDto: NewInvestmentDto) {
         const member: Member = this.family.getMember(memberId);
         this.backendService
             .createInvestment(member, newInvestmentDto)
-            .subscribe(this.family.addInvestment);
+            .subscribe(investment => {
+                this.family.addInvestment(investment);
+            });
     }
 
-    updateGrowth(growth: Growth) {
-        // TODO: Call backend to update Growth
+    updateGrowth(investment: Investment, updateGrowthDto: UpdateGrowthDto) {
+        this.backendService
+            .updateGrowth(investment, updateGrowthDto)
+            .pipe(mergeMap(investment => {
+                return this.backendService.getFamily(this.family.getLoginId());
+            }))
+            .subscribe(family => {
+                this.family = family;
+            })
     }
 }

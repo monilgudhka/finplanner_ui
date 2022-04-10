@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Growth } from 'src/app/shared/model/growth.model';
+import { UpdateGrowthDto } from 'src/app/shared/dto/update-growth-dto.model';
 import { Investment } from 'src/app/shared/model/investment.model';
 import { FamilyService } from 'src/app/shared/service/family.service';
 
@@ -38,10 +38,11 @@ export class InvestmentEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const growth: Growth = this.investment.getGrowth();
-    growth.setInvestmentAmount(this.editForm.value.investedAmount);
-    growth.setCurrentAmount(this.editForm.value.currentAmount);
-    this.familyService.updateGrowth(growth);
+    const updateGrowth: UpdateGrowthDto = new UpdateGrowthDto(
+      this.editForm.value.investedAmount,
+      this.editForm.value.currentAmount
+    );
+    this.familyService.updateGrowth(this.investment, updateGrowth);
     this.router.navigate(['../../'], { relativeTo: this.route });
   }
 

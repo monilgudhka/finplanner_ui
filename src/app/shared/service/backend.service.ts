@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
+import { flatMap, map, mergeMap, Observable } from "rxjs";
 import { FamilyDto } from "../dto/family-dto.model";
 import { InvestmentDto } from "../dto/investment-dto.model";
 import { MemberDto } from "../dto/member-dto.model";
@@ -9,6 +9,7 @@ import { Investment } from "../model/investment.model";
 import { Member } from "../model/member.model";
 import { NewInvestmentDto } from "../dto/new-investment-dto.model";
 import { ConverterService } from "./converter.service";
+import { UpdateGrowthDto } from "../dto/update-growth-dto.model";
 
 @Injectable()
 export class BackendService {
@@ -43,6 +44,15 @@ export class BackendService {
             newInvestmentDto
         ).pipe(map(investmentDto => {
             return ConverterService.toInvestment(investmentDto, member);
+        }));
+    }
+
+    updateGrowth(investment: Investment, updateGrowth: UpdateGrowthDto): Observable<Investment> {
+        return this.http.put<InvestmentDto>(
+            'http://localhost:8080/api/investment/' + investment.getId(),
+            updateGrowth
+        ).pipe(map(investmentDto => {
+            return ConverterService.toInvestment(investmentDto, investment.getMember());
         }));
     }
 
