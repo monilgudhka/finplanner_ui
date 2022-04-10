@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Observable, tap } from "rxjs";
 import { FamilyService } from "./family.service";
 
 @Injectable()
@@ -16,15 +17,13 @@ export class AuthService {
         return false;
     }
 
-    public isSignedIn(): boolean {
-        let isSigned: boolean = (localStorage.getItem(this.LOGIN_ID_KEY) !== null);
-        if (isSigned) {
-            isSigned = this.familyService.loadDetails(this.getLoginId());
-            if (!isSigned) {
-                this.signOut();
-            }
-        }
-        return isSigned;
+    public isSignedIn(): Observable<boolean> {
+        return this.familyService.loadDetails(this.getLoginId())
+            .pipe(tap(loadSuccess => {
+                if (!loadSuccess) {
+                    this.signOut();
+                }
+            }));
     }
 
     public getLoginId(): string {

@@ -17,4 +17,11 @@ export class BackendService {
         ).pipe(map(ConverterService.convert));
     }
 
+    getFamily(loginId: string): Observable<Family> {
+        return this.http.get<FamilyDto>(
+            'http://localhost:8080/api/family',
+            { params: { login_id: loginId } }
+        ).pipe(map(ConverterService.convert));
+    }
+
 }
