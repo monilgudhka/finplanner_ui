@@ -23,6 +23,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateBackendResourceService } from "./shared/service/backend/create-backend-resource.service";
 import { GetBackendResourceService } from "./shared/service/backend/get-backend-resource.service";
 import { UpdateBackendResourceService } from "./shared/service/backend/update-backend-resource.service";
+import { Family2Service } from './shared/service/family2.service';
+import { MembersService } from './shared/service/members.service';
+import { InvestmentsService } from './shared/service/investments.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,10 @@ import { UpdateBackendResourceService } from "./shared/service/backend/update-ba
     FamilyService,
     GetBackendResourceService,
     CreateBackendResourceService,
-    UpdateBackendResourceService
+    UpdateBackendResourceService,
+    Family2Service,
+    MembersService,
+    InvestmentsService
   ],
   bootstrap: [AppComponent]
 })
