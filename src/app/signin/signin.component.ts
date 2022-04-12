@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +11,7 @@ import { Family2Service } from '../shared/service/family2.service';
   templateUrl: './signin.component.html'
 })
 export class SigninComponent implements OnInit, OnDestroy {
-  @ViewChild('loginId') loginId: ElementRef;
+  signInForm: FormGroup;
 
   private familySubscription: Subscription;
   private errorSubscription: Subscription;
@@ -24,6 +25,10 @@ export class SigninComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.familySubscription = this.familyService.subscribeFamily(family => this.onSignInSuccess());
     this.errorSubscription = this.familyService.subscribeError(error => this.onSignInFailure(error));
+
+    this.signInForm = new FormGroup({
+      'loginId': new FormControl(null, [Validators.required, Validators.minLength(3)])
+    });
   }
 
   ngOnDestroy(): void {
@@ -32,6 +37,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   private onSignInSuccess() {
+    console.log('inside onSignInSuccess');
     this.router.navigate(['/dashboard']);
   }
 
@@ -41,11 +47,11 @@ export class SigninComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSignIn() {
-    this.familyService.load(this.loginId.nativeElement.value);
+  onSubmit() {
+    this.familyService.load(this.signInForm.value.loginId);
   }
 
-  onCreateFamily() {
-    this.familyService.create(this.loginId.nativeElement.value);
+  onCreate() {
+    this.familyService.create(this.signInForm.value.loginId);
   }
 }
