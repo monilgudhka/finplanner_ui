@@ -30,6 +30,10 @@ export class MembersService {
         return this.errorSubject.subscribe(next);
     }
 
+    getMembers(): Array<Member> {
+        return (this.family) ? this.family.getAllMembers().slice() : [];
+    }
+
     create(name: string) {
         this.createResource
             .createMember(this.family.getId(), name)
