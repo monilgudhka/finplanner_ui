@@ -10,4 +10,7 @@ export class MemberCardComponent {
 
   constructor() { }
 
+  gotoInvestments() {
+
+  }
 }

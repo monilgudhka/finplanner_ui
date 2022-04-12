@@ -7,7 +7,8 @@ import { MembersService } from 'src/app/shared/service/members.service';
 
 @Component({
   selector: 'app-members',
-  templateUrl: './members.component.html'
+  templateUrl: './members.component.html',
+  styles: ['.col-sm-3 { margin-top: 20px; }']
 })
 export class MembersComponent implements OnInit, OnDestroy {
   memberList: Array<Member> = [];

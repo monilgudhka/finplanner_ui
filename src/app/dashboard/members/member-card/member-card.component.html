@@ -1,15 +1,20 @@
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">{{ member.getName() }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">
-            <p>Last updated on {{ member.getGrowth().getLastUpdated() }}</p>
-        </h6>
-        <ul class="card-text">
+<mat-card class="member-card">
+    <mat-card-header>
+        <div mat-card-avatar></div>
+        <mat-card-title>{{ member.getName() }}</mat-card-title>
+        <mat-card-subtitle>
+            <p>{{ member.getGrowth().getLastUpdated() }}</p>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <ul>
             <li>Amount Invested:- {{ member.getGrowth().getInvestmentAmount() }}</li>
             <li>Absolute Returns:- {{ member.getGrowth().getAbsoluteReturns() }} ({{
                 member.getGrowth().getAbsoluteReturnsPercentage() }}%)</li>
             <li>XIRR:- {{ member.getGrowth().getRateOfReturn() }}%</li>
         </ul>
-        <a class="card-link" [routerLink]="['../','investments']">Investments</a>
-    </div>
-</div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="gotoInvestments()">Investments</button>
+    </mat-card-actions>
+</mat-card>
