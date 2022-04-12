@@ -25,6 +25,10 @@ export class Family2Service {
         return this.errorSubject.subscribe(next);
     }
 
+    getFamily(): Family {
+        return this.family;
+    }
+
     create(loginId: string) {
         this.createResource
             .createFamily(loginId)

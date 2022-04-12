@@ -37,7 +37,6 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   private onSignInSuccess() {
-    console.log('inside onSignInSuccess');
     this.router.navigate(['/dashboard']);
   }
 

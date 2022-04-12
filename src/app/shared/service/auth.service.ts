@@ -20,7 +20,6 @@ export class AuthService {
     }
 
     private signIn(family: Family) {
-        console.log('inside signIn');
         localStorage.setItem(this.LOGIN_ID_KEY, family.getLoginId());
         this.signedIn = true;
     }
