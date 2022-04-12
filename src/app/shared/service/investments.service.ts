@@ -2,9 +2,11 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 import { NewInvestmentDto } from "../dto/new-investment-dto.model";
+import { UpdateGrowthDto } from "../dto/update-growth-dto.model";
 import { Family } from "../model/family.model";
 import { Investment } from "../model/investment.model";
 import { CreateBackendResourceService } from "./backend/create-backend-resource.service";
+import { UpdateBackendResourceService } from "./backend/update-backend-resource.service";
 import { Family2Service } from "./family2.service";
 
 @Injectable()
@@ -16,7 +18,8 @@ export class InvestmentsService {
 
     constructor(
         private createResource: CreateBackendResourceService,
-        familyService: Family2Service
+        private updateResource: UpdateBackendResourceService,
+        private familyService: Family2Service
     ) {
         familyService.subscribeError(error => this.registerError(error));
         familyService.subscribeFamily(family => this.registerFamily(family));
@@ -52,5 +55,11 @@ export class InvestmentsService {
 
     private registerError(error: HttpErrorResponse) {
         this.errorSubject.next(error);
+    }
+
+    updateGrowth(investment: Investment, updateGrowthDto: UpdateGrowthDto) {
+        this.updateResource
+            .updateGrowth(investment, updateGrowthDto)
+            .subscribe(() => this.familyService.reload());
     }
 }

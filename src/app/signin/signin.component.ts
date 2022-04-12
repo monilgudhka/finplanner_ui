@@ -1,47 +1,51 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Family } from '../shared/model/family.model';
-import { AuthService } from '../shared/service/auth.service';
-import { CreateBackendResourceService } from '../shared/service/backend/create-backend-resource.service';
+import { Subscription } from 'rxjs';
+import { Family2Service } from '../shared/service/family2.service';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html'
 })
-export class SigninComponent {
+export class SigninComponent implements OnInit, OnDestroy {
   @ViewChild('loginId') loginId: ElementRef;
 
+  private familySubscription: Subscription;
+  private errorSubscription: Subscription;
+
   constructor(
-    private backendService: CreateBackendResourceService,
-    private authService: AuthService,
+    private familyService: Family2Service,
     private router: Router,
     private snackBar: MatSnackBar
   ) { }
 
+  ngOnInit(): void {
+    this.familySubscription = this.familyService.subscribeFamily(family => this.onSignInSuccess());
+    this.errorSubscription = this.familyService.subscribeError(error => this.onSignInFailure(error));
+  }
+
+  ngOnDestroy(): void {
+    this.familySubscription.unsubscribe();
+    this.errorSubscription.unsubscribe();
+  }
+
+  private onSignInSuccess() {
+    this.router.navigate(['/dashboard']);
+  }
+
+  private onSignInFailure(error: HttpErrorResponse) {
+    this.snackBar.open(error.error, 'Dismiss', {
+      duration: 5000
+    });
+  }
+
   onSignIn() {
-    const isSignInSuccess = this.authService.signIn(this.loginId.nativeElement.value);
-    if (isSignInSuccess) {
-      this.router.navigate(['/dashboard']);
-    } else {
-      alert('Invalid Login Id');
-    }
+    this.familyService.load(this.loginId.nativeElement.value);
   }
 
   onCreateFamily() {
-    this.backendService
-      .createFamily(this.loginId.nativeElement.value)
-      .subscribe({
-        next: (family: Family) => {
-          this.onSignIn();
-        },
-
-        error: (error: HttpErrorResponse) => {
-          this.snackBar.open(error.error, 'Dismiss', {
-            duration: 5000
-          });
-        }
-      });
+    this.familyService.create(this.loginId.nativeElement.value);
   }
 }
