@@ -43,6 +43,10 @@ export class InvestmentsService {
         return this.errorSubject.subscribe(next);
     }
 
+    getInvestments(): Array<Investment> {
+        return (this.family) ? this.family.getAllInvestments().slice() : [];
+    }
+
     create(newInvestmentDto: NewInvestmentDto) {
         this.createResource
             .createInvestment(this.family.getMember(newInvestmentDto.member_id), newInvestmentDto)

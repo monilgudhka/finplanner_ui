@@ -25,6 +25,7 @@ import { UpdateBackendResourceService } from "./shared/service/backend/update-ba
 import { Family2Service } from './shared/service/family2.service';
 import { MembersService } from './shared/service/members.service';
 import { InvestmentsService } from './shared/service/investments.service';
+import { ResourceService } from './shared/service/resource.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { InvestmentsService } from './shared/service/investments.service';
     UpdateBackendResourceService,
     Family2Service,
     MembersService,
-    InvestmentsService
+    InvestmentsService,
+    ResourceService
   ],
   bootstrap: [AppComponent]
 })
