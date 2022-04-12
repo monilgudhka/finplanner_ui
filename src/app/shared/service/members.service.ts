@@ -12,13 +12,22 @@ export class MembersService {
     private family: Family;
     private membersSubject: Subject<Array<Member>> = new Subject();
     private errorSubject: Subject<HttpErrorResponse> = new Subject();
+    private familySubscription: Subscription;
+    private errorSubscription: Subscription;
 
     constructor(
         private createResource: CreateBackendResourceService,
-        familyService: Family2Service
-    ) {
-        familyService.subscribeError(error => this.registerError(error));
-        familyService.subscribeFamily(family => this.registerFamily(family));
+        private familyService: Family2Service
+    ) { }
+
+    init(): void {
+        this.errorSubscription = this.familyService.subscribeError(error => this.registerError(error));
+        this.familySubscription = this.familyService.subscribeFamily(family => this.registerFamily(family));
+    }
+
+    destroy(): void {
+        this.errorSubscription.unsubscribe();
+        this.familySubscription.unsubscribe();
     }
 
     // subscribe methods

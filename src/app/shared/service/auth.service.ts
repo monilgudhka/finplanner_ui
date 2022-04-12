@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Subscription } from "rxjs";
 import { Family } from "../model/family.model";
 import { Family2Service } from "./family2.service";
 
@@ -6,12 +7,14 @@ import { Family2Service } from "./family2.service";
 export class AuthService {
     private LOGIN_ID_KEY: string = 'login_id';
     private signedIn: boolean = false;
+    private familySubscription: Subscription;
+    private errorSubscription: Subscription;
 
     constructor(private familyService: Family2Service) { }
 
-    public init(): void {
-        this.familyService.subscribeFamily(family => this.signIn(family));
-        this.familyService.subscribeError(error => this.signOut());
+    init(): void {
+        this.familySubscription = this.familyService.subscribeFamily(family => this.signIn(family));
+        this.errorSubscription = this.familyService.subscribeError(error => this.signOut());
 
         const loginId = localStorage.getItem(this.LOGIN_ID_KEY);
         if (loginId !== null) {
@@ -19,16 +22,21 @@ export class AuthService {
         }
     }
 
+    destroy(): void {
+        this.errorSubscription.unsubscribe();
+        this.familySubscription.unsubscribe();
+    }
+
     private signIn(family: Family) {
         localStorage.setItem(this.LOGIN_ID_KEY, family.getLoginId());
         this.signedIn = true;
     }
 
-    public isSignedIn(): boolean {
+    isSignedIn(): boolean {
         return this.signedIn;
     }
 
-    public signOut() {
+    signOut() {
         localStorage.clear();
         this.signedIn = false;
     }
