@@ -11,7 +11,7 @@ import { NewInvestmentDto } from "../../dto/new-investment-dto.model";
 import { ConverterService } from "../converter.service";
 
 @Injectable()
-export class CreateResourceBackendService {
+export class CreateBackendResourceService {
     constructor(private http: HttpClient) { }
 
     createFamily(loginId: string): Observable<Family> {

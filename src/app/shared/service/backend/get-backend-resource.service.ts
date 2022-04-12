@@ -7,7 +7,7 @@ import { Family } from "../../model/family.model";
 import { ConverterService } from "../converter.service";
 
 @Injectable()
-export class GetResourceBackendService {
+export class GetBackendResourceService {
     constructor(private http: HttpClient) { }
 
     getFamily(loginId: string): Observable<Family> {

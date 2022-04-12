@@ -20,9 +20,9 @@ import { MaterialModule } from './material.module';
 import { NewInvestmentComponent } from './dashboard/investments/new-investment/new-investment.component';
 import { InvestmentEditComponent } from './dashboard/investments/investment-edit/investment-edit.component';
 import { HttpClientModule } from '@angular/common/http';
-import { GetResourceBackendService } from './shared/service/backend/get-resource-backend.service';
-import { CreateResourceBackendService } from './shared/service/backend/create-resource-backend.service';
-import { UpdateResourceBackendService } from './shared/service/backend/update-resource-backend.service';
+import { CreateBackendResourceService } from "./shared/service/backend/create-backend-resource.service";
+import { GetBackendResourceService } from "./shared/service/backend/get-backend-resource.service";
+import { UpdateBackendResourceService } from "./shared/service/backend/update-backend-resource.service";
 
 @NgModule({
   declarations: [
@@ -50,9 +50,9 @@ import { UpdateResourceBackendService } from './shared/service/backend/update-re
     AuthService,
     AuthGuardService,
     FamilyService,
-    GetResourceBackendService,
-    CreateResourceBackendService,
-    UpdateResourceBackendService
+    GetBackendResourceService,
+    CreateBackendResourceService,
+    UpdateBackendResourceService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,7 +5,7 @@ import { UpdateGrowthDto } from "../../dto/update-growth-dto.model";
 import { Investment } from "../../model/investment.model";
 
 @Injectable()
-export class UpdateResourceBackendService {
+export class UpdateBackendResourceService {
     constructor(private http: HttpClient) { }
 
     updateGrowth(investment: Investment, updateGrowth: UpdateGrowthDto): Observable<void> {

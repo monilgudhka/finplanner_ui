@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Family } from '../shared/model/family.model';
 import { AuthService } from '../shared/service/auth.service';
-import { CreateResourceBackendService } from '../shared/service/backend/create-resource-backend.service';
+import { CreateBackendResourceService } from '../shared/service/backend/create-backend-resource.service';
 
 @Component({
   selector: 'app-signin',
@@ -14,7 +14,7 @@ export class SigninComponent {
   @ViewChild('loginId') loginId: ElementRef;
 
   constructor(
-    private backendService: CreateResourceBackendService,
+    private backendService: CreateBackendResourceService,
     private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar

@@ -5,9 +5,9 @@ import { Member } from "../model/member.model";
 import { NewInvestmentDto } from "../dto/new-investment-dto.model";
 import { Investment } from "../model/investment.model";
 import { UpdateGrowthDto } from "../dto/update-growth-dto.model";
-import { CreateResourceBackendService } from "./backend/create-resource-backend.service";
-import { GetResourceBackendService } from "./backend/get-resource-backend.service";
-import { UpdateResourceBackendService } from "./backend/update-resource-backend.service";
+import { CreateBackendResourceService } from "./backend/create-backend-resource.service";
+import { GetBackendResourceService } from "./backend/get-backend-resource.service";
+import { UpdateBackendResourceService } from "./backend/update-backend-resource.service";
 
 @Injectable()
 export class FamilyService {
@@ -15,9 +15,9 @@ export class FamilyService {
     private family: Family;
 
     constructor(
-        private createResource: CreateResourceBackendService,
-        private getResource: GetResourceBackendService,
-        private updateResource: UpdateResourceBackendService
+        private createResource: CreateBackendResourceService,
+        private getResource: GetBackendResourceService,
+        private updateResource: UpdateBackendResourceService
     ) { }
 
     loadDetails(loginId: string): Observable<boolean> {
