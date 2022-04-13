@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Growth } from 'src/app/shared/model/growth.model';
-import { Family2Service } from 'src/app/shared/service/family2.service';
+import { FamilyService } from 'src/app/shared/service/family.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private familySubscription: Subscription;
 
-  constructor(private familyService: Family2Service) { }
+  constructor(private familyService: FamilyService) { }
 
   ngOnInit(): void {
     this.familySubscription = this.familyService.subscribeFamily(family => {

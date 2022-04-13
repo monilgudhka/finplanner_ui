@@ -4,7 +4,7 @@ import { Subject, Subscription } from "rxjs";
 import { Family } from "../model/family.model";
 import { Member } from "../model/member.model";
 import { CreateBackendResourceService } from "./backend/create-backend-resource.service";
-import { Family2Service } from "./family2.service";
+import { FamilyService } from "./family.service";
 
 @Injectable()
 export class MembersService {
@@ -17,7 +17,7 @@ export class MembersService {
 
     constructor(
         private createResource: CreateBackendResourceService,
-        private familyService: Family2Service
+        private familyService: FamilyService
     ) { }
 
     init(): void {

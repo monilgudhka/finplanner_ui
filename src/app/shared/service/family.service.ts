@@ -1,68 +1,62 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { from, map, mergeMap, Observable } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { Family } from "../model/family.model";
-import { Member } from "../model/member.model";
-import { NewInvestmentDto } from "../dto/new-investment-dto.model";
-import { Investment } from "../model/investment.model";
-import { UpdateGrowthDto } from "../dto/update-growth-dto.model";
 import { CreateBackendResourceService } from "./backend/create-backend-resource.service";
 import { GetBackendResourceService } from "./backend/get-backend-resource.service";
-import { UpdateBackendResourceService } from "./backend/update-backend-resource.service";
 
 @Injectable()
 export class FamilyService {
 
     private family: Family;
+    private familySubject: Subject<Family> = new Subject();
+    private errorSubject: Subject<HttpErrorResponse> = new Subject();
 
     constructor(
         private createResource: CreateBackendResourceService,
-        private getResource: GetBackendResourceService,
-        private updateResource: UpdateBackendResourceService
+        private getResource: GetBackendResourceService
     ) { }
 
-    loadDetails(loginId: string): Observable<boolean> {
-        if (loginId === '') {
-            return from([false]);
-        } else if (this.family && loginId === this.family.getLoginId()) {
-            return from([true]);
-        } else {
-            return this.getResource.getFamily(loginId)
-                .pipe(map((family) => {
-                    this.family = family;
-                    return true;
-                }));
-        }
+    subscribeFamily(next: (value: Family) => void): Subscription {
+        return this.familySubject.subscribe(next);
+    }
+
+    subscribeError(next: (value: HttpErrorResponse) => void): Subscription {
+        return this.errorSubject.subscribe(next);
     }
 
     getFamily(): Family {
         return this.family;
     }
 
-    createMember(name: string) {
+    create(loginId: string) {
         this.createResource
-            .createMember(this.family.getId(), name)
-            .subscribe(member => {
-                this.family.addMember(member);
+            .createFamily(loginId)
+            .subscribe({
+                next: (family: Family) => this.registerFamily(family),
+                error: (error: HttpErrorResponse) => this.registerError(error)
             });
     }
 
-    createInvestment(memberId: number, newInvestmentDto: NewInvestmentDto) {
-        const member: Member = this.family.getMember(memberId);
-        this.createResource
-            .createInvestment(member, newInvestmentDto)
-            .subscribe(investment => {
-                this.family.addInvestment(investment);
+    load(loginId: string) {
+        this.getResource
+            .getFamily(loginId)
+            .subscribe({
+                next: (family: Family) => this.registerFamily(family),
+                error: (error: HttpErrorResponse) => this.registerError(error)
             });
     }
 
-    updateGrowth(investment: Investment, updateGrowthDto: UpdateGrowthDto) {
-        this.updateResource
-            .updateGrowth(investment, updateGrowthDto)
-            .pipe(mergeMap(() => {
-                return this.getResource.getFamily(this.family.getLoginId());
-            }))
-            .subscribe(family => {
-                this.family = family;
-            })
+    reload() {
+        this.load(this.family.getLoginId());
+    }
+
+    private registerFamily(family: Family) {
+        this.family = family;
+        this.familySubject.next(this.family);
+    }
+
+    private registerError(error: HttpErrorResponse) {
+        this.errorSubject.next(error);
     }
 }

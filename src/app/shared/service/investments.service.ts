@@ -7,7 +7,7 @@ import { Family } from "../model/family.model";
 import { Investment } from "../model/investment.model";
 import { CreateBackendResourceService } from "./backend/create-backend-resource.service";
 import { UpdateBackendResourceService } from "./backend/update-backend-resource.service";
-import { Family2Service } from "./family2.service";
+import { FamilyService } from "./family.service";
 
 @Injectable()
 export class InvestmentsService {
@@ -21,7 +21,7 @@ export class InvestmentsService {
     constructor(
         private createResource: CreateBackendResourceService,
         private updateResource: UpdateBackendResourceService,
-        private familyService: Family2Service
+        private familyService: FamilyService
     ) { }
 
     init(): void {

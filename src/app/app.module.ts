@@ -12,7 +12,6 @@ import { AuthGuardService } from './shared/service/authguard.service';
 import { HomeComponent } from './dashboard/home/home.component';
 import { InvestmentsComponent } from './dashboard/investments/investments.component';
 import { MembersComponent } from './dashboard/members/members.component';
-import { FamilyService } from './shared/service/family.service';
 import { MemberCardComponent } from './dashboard/members/member-card/member-card.component';
 import { MemberAddComponent } from './dashboard/members/member-add/member-add.component';
 import { MaterialModule } from './material.module';
@@ -22,7 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateBackendResourceService } from "./shared/service/backend/create-backend-resource.service";
 import { GetBackendResourceService } from "./shared/service/backend/get-backend-resource.service";
 import { UpdateBackendResourceService } from "./shared/service/backend/update-backend-resource.service";
-import { Family2Service } from './shared/service/family2.service';
+import { FamilyService } from './shared/service/family.service';
 import { MembersService } from './shared/service/members.service';
 import { InvestmentsService } from './shared/service/investments.service';
 import { ResourceService } from './shared/service/resource.service';
@@ -51,11 +50,10 @@ import { ResourceService } from './shared/service/resource.service';
   providers: [
     AuthService,
     AuthGuardService,
-    FamilyService,
     GetBackendResourceService,
     CreateBackendResourceService,
     UpdateBackendResourceService,
-    Family2Service,
+    FamilyService,
     MembersService,
     InvestmentsService,
     ResourceService

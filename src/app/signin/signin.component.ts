@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Family2Service } from '../shared/service/family2.service';
+import { FamilyService } from '../shared/service/family.service';
 
 @Component({
   selector: 'app-signin',
@@ -17,7 +17,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   private errorSubscription: Subscription;
 
   constructor(
-    private familyService: Family2Service,
+    private familyService: FamilyService,
     private router: Router,
     private snackBar: MatSnackBar
   ) { }

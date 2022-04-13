@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Family } from "../model/family.model";
-import { Family2Service } from "./family2.service";
+import { FamilyService } from "./family.service";
 
 @Injectable()
 export class AuthService {
@@ -10,7 +10,7 @@ export class AuthService {
     private familySubscription: Subscription;
     private errorSubscription: Subscription;
 
-    constructor(private familyService: Family2Service) { }
+    constructor(private familyService: FamilyService) { }
 
     init(): void {
         this.familySubscription = this.familyService.subscribeFamily(family => this.signIn(family));
