@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UpdateGrowthDto } from 'src/app/shared/dto/update-growth-dto.model';
 import { Investment } from 'src/app/shared/model/investment.model';
-import { FamilyService } from 'src/app/shared/service/family.service';
+import { InvestmentsService } from 'src/app/shared/service/investments.service';
 
 @Component({
   selector: 'app-investment-edit',
@@ -14,7 +14,7 @@ export class InvestmentEditComponent implements OnInit {
   editForm: FormGroup;
 
   constructor(
-    private familyService: FamilyService,
+    private investmentsService: InvestmentsService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -28,7 +28,7 @@ export class InvestmentEditComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         const id = +params['id'];
-        this.investment = this.familyService.getFamily().getInvestment(id);
+        this.investment = this.investmentsService.getInvestment(id);
         this.editForm.setValue({
           'investedAmount': this.investment.getGrowth().getInvestmentAmount(),
           'currentAmount': this.investment.getGrowth().getCurrentAmount()
@@ -42,7 +42,7 @@ export class InvestmentEditComponent implements OnInit {
       this.editForm.value.investedAmount,
       this.editForm.value.currentAmount
     );
-    this.familyService.updateGrowth(this.investment, updateGrowth);
+    this.investmentsService.updateGrowth(this.investment, updateGrowth);
     this.router.navigate(['../../'], { relativeTo: this.route });
   }
 

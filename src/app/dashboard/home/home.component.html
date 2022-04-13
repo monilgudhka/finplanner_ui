@@ -3,7 +3,7 @@
         <p>Loading...</p>
     </div>
     <div class="col-xs-12" *ngIf="growth">
-        <h4>Net Worth:- {{ growth.getCurrentAmount() }}</h4>
+        <p class="h4">Net Worth:- {{ growth.getCurrentAmount() }}</p>
         <ul>
             <li>Amount Invested:- {{ growth.getInvestmentAmount() }}</li>
             <li>Absolute Returns:- {{ growth.getAbsoluteReturns() }} ({{ growth.getAbsoluteReturnsPercentage() }}%)</li>

@@ -47,6 +47,10 @@ export class InvestmentsService {
         return (this.family) ? this.family.getAllInvestments().slice() : [];
     }
 
+    getInvestment(id: number): Investment {
+        return this.family.getInvestment(id);
+    }
+
     create(newInvestmentDto: NewInvestmentDto) {
         this.createResource
             .createInvestment(this.family.getMember(newInvestmentDto.member_id), newInvestmentDto)
