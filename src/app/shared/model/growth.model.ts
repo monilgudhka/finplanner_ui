@@ -24,7 +24,7 @@ export class Growth {
     }
 
     getAbsoluteReturns(): number {
-        return this.currentAmount - this.investedAmount;
+        return Math.floor(this.currentAmount - this.investedAmount);
     }
 
     getAbsoluteReturnsPercentage(): number {

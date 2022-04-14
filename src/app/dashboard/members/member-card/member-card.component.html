@@ -8,8 +8,9 @@
     </mat-card-header>
     <mat-card-content>
         <ul>
-            <li>Amount Invested:- {{ member.getGrowth().getInvestmentAmount() }}</li>
-            <li>Absolute Returns:- {{ member.getGrowth().getAbsoluteReturns() }} ({{
+            <li>Net Worth:- {{ member.getGrowth().getCurrentAmount() | currency:'INR' }}</li>
+            <li>Amount Invested:- {{ member.getGrowth().getInvestmentAmount() | currency:'INR' }}</li>
+            <li>Absolute Returns:- {{ member.getGrowth().getAbsoluteReturns() | currency:'INR' }} ({{
                 member.getGrowth().getAbsoluteReturnsPercentage() }}%)</li>
             <li>XIRR:- {{ member.getGrowth().getRateOfReturn() }}%</li>
         </ul>

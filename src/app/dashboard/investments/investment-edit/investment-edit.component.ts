@@ -30,8 +30,8 @@ export class InvestmentEditComponent implements OnInit {
         const id = +params['id'];
         this.investment = this.investmentsService.getInvestment(id);
         this.editForm.setValue({
-          'investedAmount': this.investment.getGrowth().getInvestmentAmount(),
-          'currentAmount': this.investment.getGrowth().getCurrentAmount()
+          'investedAmount': Math.floor(this.investment.getGrowth().getInvestmentAmount()),
+          'currentAmount': Math.floor(this.investment.getGrowth().getCurrentAmount())
         });
       }
     );
