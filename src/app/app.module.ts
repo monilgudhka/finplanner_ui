@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,8 @@ import { FamilyService } from './shared/service/family.service';
 import { MembersService } from './shared/service/members.service';
 import { InvestmentsService } from './shared/service/investments.service';
 import { ResourceService } from './shared/service/resource.service';
+import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
+import { SummaryComponent } from './dashboard/home/summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { ResourceService } from './shared/service/resource.service';
     MembersComponent,
     MemberCardComponent,
     MemberAddComponent,
-    InvestmentEditComponent
+    InvestmentEditComponent,
+    DoughnutChartComponent,
+    SummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +50,8 @@ import { ResourceService } from './shared/service/resource.service';
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgChartsModule
   ],
   providers: [
     AuthService,
