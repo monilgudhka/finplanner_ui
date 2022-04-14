@@ -1,15 +1,10 @@
 <div class="row">
-    <div class="col-xs-12" *ngIf="!growth">
-        <p>Loading...</p>
+    <div class="col-xs-12">
+        <app-summary></app-summary>
     </div>
-    <div class="col-xs-12" *ngIf="growth">
-        <p class="h4">Net Worth:- {{ growth.getCurrentAmount() | currency:'INR' }}</p>
-        <ul>
-            <li>Amount Invested:- {{ growth.getInvestmentAmount() | currency:'INR' }}</li>
-            <li>Absolute Returns:- {{ growth.getAbsoluteReturns() | currency:'INR' }} ({{
-                growth.getAbsoluteReturnsPercentage() }}%)</li>
-            <li>XIRR:- {{ growth.getRateOfReturn() }}%</li>
-        </ul>
-        <p>Last updated on {{ growth.getLastUpdated() }}</p>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        
     </div>
 </div>
