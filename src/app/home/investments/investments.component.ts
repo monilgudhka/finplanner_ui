@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Investment } from 'src/app/shared/model/investment.model';
@@ -13,11 +14,12 @@ import { InvestmentsService } from 'src/app/shared/service/investments.service';
 })
 export class InvestmentsComponent implements OnInit, OnDestroy {
   columnsToDisplay: string[] = ['title', 'goalTerm', 'assetClass', 'assetType', 'liquidity', 'member', 'investedAmount', 'currentAmount', 'rateOfReturn', 'absoluteReturns', 'absoluteReturnsPercentage', 'edit', 'lastUpdated'];
-  investmentList: Array<Investment>;
+  datasource: MatTableDataSource<Investment>;
   failure: boolean = false;
 
   private investmentsSubscription: Subscription;
   private errorSubscription: Subscription;
+  private investmentList: Array<Investment>;
 
   constructor(
     private investmentsService: InvestmentsService,
@@ -32,6 +34,17 @@ export class InvestmentsComponent implements OnInit, OnDestroy {
       this.investmentList = investments;
     });
     this.investmentList = this.investmentsService.getInvestments();
+    this.datasource = new MatTableDataSource(this.investmentList);
+    this.datasource.filterPredicate = this.filterPredicate;
+  }
+
+  private filterPredicate(record: Investment, filter: string): boolean {
+    return record.getTitle().includes(filter)
+      || record.getAssetType().toLowerCase() === filter
+      || record.getAssetClass().toLowerCase() === filter
+      || record.getLiquidity().toLowerCase() === filter
+      || record.getGoalTerm().toLowerCase() === filter
+      || record.getMember().getName().toLowerCase() === filter;
   }
 
   ngOnDestroy(): void {
@@ -48,6 +61,11 @@ export class InvestmentsComponent implements OnInit, OnDestroy {
 
   onEdit(investment: Investment) {
     this.router.navigate([investment.getId(), 'edit'], { relativeTo: this.route });
+  }
+
+  applyFilter(event: Event) {
+    const filterText: string = (event.target as HTMLInputElement).value;
+    this.datasource.filter = filterText.trim().toLowerCase();
   }
 
 }
