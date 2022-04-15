@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './insights.component.html'
 })
 export class InsightsComponent<T> implements OnInit {
-  @Input('investments') elements: Array<T>;
+  @Input('elements') elements: Array<T>;
   @Input('categoryFunc') categoryFunc: (element: T) => string;
   @Input('valueFunc') valueFunc: (element: T) => number;
   labels: string[] = [];
