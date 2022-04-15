@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InsightDetails } from './insight-details.interface';
 
@@ -13,7 +14,7 @@ export class InsightsComponent<T> implements OnInit {
   labels: string[] = [];
   values: number[] = [];
 
-  constructor() { }
+  constructor(private currency: CurrencyPipe) { }
 
   ngOnInit(): void {
     let totalValue: number = 0;
@@ -35,7 +36,7 @@ export class InsightsComponent<T> implements OnInit {
     }
 
     for (const [key, value] of labelToValueMap.entries()) {
-      this.labels.push(key + '(' + value + ')');
+      this.labels.push(key + '(' + this.currency.transform(value, 'INR') + ')');
       this.values.push((value / totalValue) * 100);
     }
   }
