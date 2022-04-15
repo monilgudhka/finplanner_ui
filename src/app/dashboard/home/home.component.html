@@ -3,5 +3,10 @@
         <mat-grid-tile [colspan]="3" [rowspan]="1">
             <app-summary [growth]="growth"></app-summary>
         </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <app-insights [investments]="investments" [categoryFunc]="categoryByAssetClass"
+                [valueFunc]="getInvestmentValue">
+            </app-insights>
+        </mat-grid-tile>
     </mat-grid-list>
 </div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ChartData, ChartEvent, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-doughnut-chart',
@@ -9,11 +9,21 @@ export class DoughnutChartComponent implements OnInit {
   @Output('click') chartClicked = new EventEmitter<string>();
   @Input('labels') labels: string[];
   @Input('values') values: number[];
+
+  chartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false
+      }
+    }
+  };
   chartType: ChartType = 'doughnut';
   chartData: ChartData<'doughnut'>;
 
   ngOnInit(): void {
     this.chartData = {
+
       labels: this.labels,
       datasets: [
         { data: this.values }
