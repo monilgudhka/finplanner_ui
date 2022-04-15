@@ -119,7 +119,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onCheckDetails(label: string) {
-    this.router.navigate(['investments'], { relativeTo: this.route });
+    this.router.navigate(
+      ['investments'],
+      {
+        relativeTo: this.route,
+        queryParams: {
+          filter: label
+        }
+      }
+    );
   }
 
   private getInvestmentValue(investment: Investment): number {

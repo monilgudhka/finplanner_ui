@@ -15,6 +15,14 @@ export class MemberCardComponent {
   ) { }
 
   gotoInvestments() {
-    this.router.navigate(['../', 'investments'], { relativeTo: this.route });
+    this.router.navigate(
+      ['../', 'investments'],
+      {
+        relativeTo: this.route,
+        queryParams: {
+          filter: this.member.getName()
+        }
+      }
+    );
   }
 }
