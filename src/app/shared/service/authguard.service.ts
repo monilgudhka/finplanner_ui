@@ -16,11 +16,22 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        const signedIn = this.authService.isSignedIn();
+        const signedIn: boolean | Promise<boolean> = this.authService.isSignedIn();
+        if (typeof signedIn === "boolean") {
+            this.checkSignedIn(signedIn);
+            return true;
+        } else {
+            return signedIn.then((isSigned) => {
+                this.checkSignedIn(isSigned);
+                return true;
+            });
+        }
+    }
+
+    private checkSignedIn(signedIn: boolean): void {
         if (!signedIn) {
             this.router.navigate(['/signin']);
         }
-        return true;
     }
 
 }

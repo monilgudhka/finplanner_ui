@@ -72,7 +72,9 @@ export class InvestmentsComponent implements OnInit, OnDestroy {
   }
 
   applyFilter() {
-    this.datasource.filter = this.filterText.trim().toLowerCase();
+    if (this.filterText !== undefined) {
+      this.datasource.filter = this.filterText.trim().toLowerCase();
+    }
   }
 
 }
