@@ -6,7 +6,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
   templateUrl: './doughnut-chart.component.html'
 })
 export class DoughnutChartComponent implements OnInit {
-  @Output('click') chartClicked = new EventEmitter<string>();
+  @Output('chartClicked') chartClicked = new EventEmitter<string>();
   @Input('labels') labels: string[];
   @Input('values') values: number[];
 

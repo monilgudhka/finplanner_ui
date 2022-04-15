@@ -1,13 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-insights',
   templateUrl: './insights.component.html'
 })
 export class InsightsComponent<T> implements OnInit {
+
+  @Output('checkDetails') checkDetails: EventEmitter<string> = new EventEmitter();
+  @Input('title') title: string;
   @Input('elements') elements: Array<T>;
   @Input('categoryFunc') categoryFunc: (element: T) => string;
   @Input('valueFunc') valueFunc: (element: T) => number;
+
   labels: string[] = [];
   values: number[] = [];
 
@@ -35,6 +39,8 @@ export class InsightsComponent<T> implements OnInit {
   }
 
   onClick(label: string) {
-    console.log(label, 'clicked');
+    const endIndex = label.indexOf('(');
+    const category = label.substring(0, endIndex).trim();
+    this.checkDetails.emit(category);
   }
 }

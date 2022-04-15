@@ -1,28 +1,30 @@
 <div class="grid-container">
-    <mat-grid-list cols="3" rowHeight="200px">
+    <mat-grid-list cols="4" rowHeight="200px">
         <mat-grid-tile [colspan]="3" [rowspan]="1">
             <app-summary [growth]="growth"></app-summary>
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="2" [rowspan]="2">
-            <app-insights [elements]="investments" [categoryFunc]="categoryByAssetClass"
-                [valueFunc]="getInvestmentValue">
+            <app-insights title="Asset Class" [elements]="investments" [categoryFunc]="categoryByAssetClass"
+                [valueFunc]="getInvestmentValue" (checkDetails)="onCheckDetails($event)">
             </app-insights>
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="2" [rowspan]="2">
-            <app-insights [elements]="members" [categoryFunc]="categoryByMemberName" [valueFunc]="getMemberValue">
+            <app-insights title="Members" [elements]="members" [categoryFunc]="categoryByMemberName"
+                [valueFunc]="getMemberValue" (checkDetails)="onCheckDetails($event)">
             </app-insights>
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="2" [rowspan]="2">
-            <app-insights [elements]="investments" [categoryFunc]="categoryByLiquidity"
-                [valueFunc]="getInvestmentValue">
+            <app-insights title="Liquidity" [elements]="investments" [categoryFunc]="categoryByLiquidity"
+                [valueFunc]="getInvestmentValue" (checkDetails)="onCheckDetails($event)">
             </app-insights>
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="2" [rowspan]="2">
-            <app-insights [elements]="investments" [categoryFunc]="categoryByGoalTerm" [valueFunc]="getInvestmentValue">
+            <app-insights title="Goal Terms" [elements]="investments" [categoryFunc]="categoryByGoalTerm"
+                [valueFunc]="getInvestmentValue" (checkDetails)="onCheckDetails($event)">
             </app-insights>
         </mat-grid-tile>
     </mat-grid-list>

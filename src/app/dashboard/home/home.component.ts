@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Growth } from 'src/app/shared/model/growth.model';
 import { Investment } from 'src/app/shared/model/investment.model';
@@ -24,6 +25,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private familyService: FamilyService,
     private membersService: MembersService,
     private investmentsService: InvestmentsService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +46,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.familySubscription.unsubscribe();
     this.membersSubscription.unsubscribe();
     this.investmentsSubscription.unsubscribe();
+  }
+
+  onCheckDetails(label: string) {
+    console.log(label, 'clicked');
+    this.router.navigate(['investments'], { relativeTo: this.route });
   }
 
   getInvestmentValue(investment: Investment): number {
