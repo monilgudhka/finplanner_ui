@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Investment } from 'src/app/shared/model/investment.model';
 import { InvestmentsService } from 'src/app/shared/service/investments.service';
@@ -16,6 +16,7 @@ export class InvestmentsComponent implements OnInit, OnDestroy {
   columnsToDisplay: string[] = ['title', 'goalTerm', 'assetClass', 'assetType', 'liquidity', 'member', 'investedAmount', 'currentAmount', 'rateOfReturn', 'absoluteReturns', 'absoluteReturnsPercentage', 'edit', 'lastUpdated'];
   datasource: MatTableDataSource<Investment>;
   failure: boolean = false;
+  filterText: string;
 
   private investmentsSubscription: Subscription;
   private errorSubscription: Subscription;
@@ -34,8 +35,15 @@ export class InvestmentsComponent implements OnInit, OnDestroy {
       this.investmentList = investments;
     });
     this.investmentList = this.investmentsService.getInvestments();
+
     this.datasource = new MatTableDataSource(this.investmentList);
     this.datasource.filterPredicate = this.filterPredicate;
+
+    this.route.queryParams.subscribe(
+      (param: Params) => {
+        this.filterText = param['filter'];
+        this.applyFilter();
+      });
   }
 
   private filterPredicate(record: Investment, filter: string): boolean {
@@ -63,9 +71,8 @@ export class InvestmentsComponent implements OnInit, OnDestroy {
     this.router.navigate([investment.getId(), 'edit'], { relativeTo: this.route });
   }
 
-  applyFilter(event: Event) {
-    const filterText: string = (event.target as HTMLInputElement).value;
-    this.datasource.filter = filterText.trim().toLowerCase();
+  applyFilter() {
+    this.datasource.filter = this.filterText.trim().toLowerCase();
   }
 
 }
