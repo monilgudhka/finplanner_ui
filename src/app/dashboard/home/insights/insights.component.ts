@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { InsightDetails } from './insight-details.interface';
 
 @Component({
   selector: 'app-insights',
@@ -7,10 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class InsightsComponent<T> implements OnInit {
 
   @Output('checkDetails') checkDetails: EventEmitter<string> = new EventEmitter();
-  @Input('title') title: string;
-  @Input('elements') elements: Array<T>;
-  @Input('categoryFunc') categoryFunc: (element: T) => string;
-  @Input('valueFunc') valueFunc: (element: T) => number;
+  @Input('insight') insight: InsightDetails<T>;
 
   labels: string[] = [];
   values: number[] = [];
@@ -20,9 +18,9 @@ export class InsightsComponent<T> implements OnInit {
   ngOnInit(): void {
     let totalValue: number = 0;
     const labelToValueMap: Map<string, number> = new Map();
-    for (const element of this.elements) {
-      const label: string = this.categoryFunc(element);
-      let value: number = this.valueFunc(element);
+    for (const element of this.insight.elements) {
+      const label: string = this.insight.categoryFunc(element);
+      let value: number = this.insight.valueFunc(element);
       totalValue = totalValue + value;
 
       const previousValue: number | undefined = labelToValueMap.get(label);

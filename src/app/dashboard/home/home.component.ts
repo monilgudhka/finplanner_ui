@@ -7,13 +7,18 @@ import { Member } from 'src/app/shared/model/member.model';
 import { FamilyService } from 'src/app/shared/service/family.service';
 import { InvestmentsService } from 'src/app/shared/service/investments.service';
 import { MembersService } from 'src/app/shared/service/members.service';
+import { InsightDetails } from './insights/insight-details.interface';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  growth: Growth;
+
+  investmentInsights: InsightDetails<Investment>[];
+  memberInsights: InsightDetails<Member>[];
+
+  familyGrowth: Growth;
   investments: Array<Investment>;
   members: Array<Member>;
 
@@ -30,16 +35,53 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.familySubscription = this.familyService.subscribeFamily(family => this.growth = family.getGrowth());
+    this.familySubscription = this.familyService.subscribeFamily(family => this.familyGrowth = family.getGrowth());
     this.membersSubscription = this.membersService.subscribeMembers(members => this.members = members);
     this.investmentsSubscription = this.investmentsService.subscribeInvestments(investments => this.investments = investments);
 
     const family = this.familyService.getFamily();
     if (family) {
-      this.growth = family.getGrowth();
+      this.familyGrowth = family.getGrowth();
       this.members = this.membersService.getMembers();
       this.investments = this.investmentsService.getInvestments();
     }
+
+    this.initMembersInsights();
+    this.initInvestmentInsights();
+  }
+
+  private initMembersInsights(): void {
+    this.memberInsights = [
+      {
+        title: 'Members',
+        elements: this.members,
+        categoryFunc: (m) => m.getName(),
+        valueFunc: this.getMemberValue
+      }
+    ];
+  }
+
+  private initInvestmentInsights(): void {
+    this.investmentInsights = [
+      {
+        title: 'Asset Class',
+        elements: this.investments,
+        categoryFunc: (inv) => inv.getAssetClass(),
+        valueFunc: this.getInvestmentValue
+      },
+      {
+        title: 'Goal Terms',
+        elements: this.investments,
+        categoryFunc: (inv) => inv.getGoalTerm(),
+        valueFunc: this.getInvestmentValue
+      },
+      {
+        title: 'Liquidity',
+        elements: this.investments,
+        categoryFunc: (inv) => inv.getLiquidity(),
+        valueFunc: this.getInvestmentValue
+      }
+    ];
   }
 
   ngOnDestroy(): void {
@@ -49,31 +91,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onCheckDetails(label: string) {
-    console.log(label, 'clicked');
     this.router.navigate(['investments'], { relativeTo: this.route });
   }
 
-  getInvestmentValue(investment: Investment): number {
+  private getInvestmentValue(investment: Investment): number {
     return investment.getGrowth().getCurrentAmount();
   }
 
-  getMemberValue(member: Member): number {
+  private getMemberValue(member: Member): number {
     return member.getGrowth().getCurrentAmount();
   }
 
-  categoryByAssetClass(investment: Investment): string {
-    return investment.getAssetClass();
-  }
-
-  categoryByMemberName(member: Member): string {
-    return member.getName();
-  }
-
-  categoryByLiquidity(investment: Investment): string {
-    return investment.getLiquidity();
-  }
-
-  categoryByGoalTerm(investment: Investment): string {
-    return investment.getGoalTerm();
-  }
 }
