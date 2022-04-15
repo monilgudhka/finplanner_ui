@@ -1,31 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Input } from '@angular/core';
 import { Growth } from 'src/app/shared/model/growth.model';
-import { FamilyService } from 'src/app/shared/service/family.service';
 
 @Component({
     selector: 'app-summary',
     templateUrl: './summary.component.html'
 })
-export class SummaryComponent implements OnInit, OnDestroy {
-    growth: Growth;
-
-    private familySubscription: Subscription;
-
-    constructor(private familyService: FamilyService) { }
-
-    ngOnInit(): void {
-        this.familySubscription = this.familyService.subscribeFamily(family => {
-            this.growth = family.getGrowth();
-        });
-        const family = this.familyService.getFamily();
-        if (family) {
-            this.growth = family.getGrowth();
-        }
-    }
-
-    ngOnDestroy(): void {
-        this.familySubscription.unsubscribe();
-    }
-    
+export class SummaryComponent {
+    @Input('growth') growth: Growth;
 }

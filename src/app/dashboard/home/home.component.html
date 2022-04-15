@@ -1,10 +1,7 @@
-<div class="row">
-    <div class="col-xs-12">
-        <app-summary></app-summary>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        
-    </div>
+<div class="grid-container">
+    <mat-grid-list cols="3" rowHeight="200px">
+        <mat-grid-tile [colspan]="3" [rowspan]="1">
+            <app-summary [growth]="growth"></app-summary>
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>

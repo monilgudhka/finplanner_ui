@@ -28,6 +28,8 @@ import { InvestmentsService } from './shared/service/investments.service';
 import { ResourceService } from './shared/service/resource.service';
 import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
 import { SummaryComponent } from './dashboard/home/summary/summary.component';
+import { InvestmentsInsightsComponent } from './dashboard/home/investments-insights/investments-insights.component';
+import { MembersInsightsComponent } from './dashboard/home/members-insights/members-insights.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { SummaryComponent } from './dashboard/home/summary/summary.component';
     MemberAddComponent,
     InvestmentEditComponent,
     DoughnutChartComponent,
-    SummaryComponent
+    SummaryComponent,
+    InvestmentsInsightsComponent,
+    MembersInsightsComponent
   ],
   imports: [
     BrowserModule,
