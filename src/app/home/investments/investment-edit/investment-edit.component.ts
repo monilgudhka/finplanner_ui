@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UpdateGrowthDto } from 'src/app/shared/dto/update-growth-dto.model';
 import { Investment } from 'src/app/shared/model/investment.model';
 import { InvestmentsService } from 'src/app/shared/service/investments.service';
+import { Utilities } from 'src/app/shared/util';
 
 @Component({
   selector: 'app-investment-edit',
@@ -30,8 +31,8 @@ export class InvestmentEditComponent implements OnInit {
         const id = +params['id'];
         this.investment = this.investmentsService.getInvestment(id);
         this.editForm.setValue({
-          'investedAmount': Math.floor(this.investment.getGrowth().getInvestmentAmount()),
-          'currentAmount': Math.floor(this.investment.getGrowth().getCurrentAmount())
+          'investedAmount': Utilities.round(this.investment.getGrowth().getInvestmentAmount()),
+          'currentAmount': Utilities.round(this.investment.getGrowth().getCurrentAmount())
         });
       }
     );

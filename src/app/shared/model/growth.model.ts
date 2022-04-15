@@ -1,3 +1,5 @@
+import { Utilities } from "../util";
+
 export class Growth {
     constructor(
         private id: number,
@@ -24,11 +26,11 @@ export class Growth {
     }
 
     getAbsoluteReturns(): number {
-        return Math.floor(this.currentAmount - this.investedAmount);
+        return Utilities.round(this.currentAmount - this.investedAmount);
     }
 
     getAbsoluteReturnsPercentage(): number {
-        return Math.floor(((this.currentAmount / this.investedAmount) - 1) * 100);
+        return Utilities.round(((this.currentAmount / this.investedAmount) - 1) * 100);
     }
 
     setInvestmentAmount(amount: number) {

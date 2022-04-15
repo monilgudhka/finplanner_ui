@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Utilities } from 'src/app/shared/util';
 import { InsightDetails } from './insight-details.interface';
 
 @Component({
@@ -37,7 +38,7 @@ export class InsightsComponent<T> implements OnInit {
 
     for (const [key, value] of labelToValueMap.entries()) {
       this.labels.push(key + '(' + this.currency.transform(value, 'INR') + ')');
-      this.values.push((value / totalValue) * 100);
+      this.values.push(Utilities.round((value / totalValue) * 100));
     }
   }
 
