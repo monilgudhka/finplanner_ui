@@ -3,4 +3,5 @@ export interface InsightDetails<T> {
     elements: Array<T>,
     categoryFunc: (element: T) => string,
     valueFunc: (element: T) => number,
+    filterFunc?: (element: T) => boolean;
 }

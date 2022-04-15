@@ -80,6 +80,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
         elements: this.investments,
         categoryFunc: (inv) => inv.getLiquidity(),
         valueFunc: this.getInvestmentValue
+      },
+      {
+        title: 'Equity Investments',
+        elements: this.investments,
+        filterFunc: (inv) => inv.getAssetClass() === 'EQUITY',
+        categoryFunc: (inv) => inv.getAssetType(),
+        valueFunc: this.getInvestmentValue
+      },
+      {
+        title: 'Gold Investments',
+        elements: this.investments,
+        filterFunc: (inv) => inv.getAssetClass() === 'GOLD',
+        categoryFunc: (inv) => inv.getAssetType(),
+        valueFunc: this.getInvestmentValue
+      },
+      {
+        title: 'Infrastructure Investments',
+        elements: this.investments,
+        filterFunc: (inv) => inv.getAssetClass() === 'INFRASTRUCTURE',
+        categoryFunc: (inv) => inv.getAssetType(),
+        valueFunc: this.getInvestmentValue
+      },
+      {
+        title: 'Debt Investments',
+        elements: this.investments,
+        filterFunc: (inv) => inv.getAssetClass() === 'DEBT',
+        categoryFunc: (inv) => inv.getAssetType(),
+        valueFunc: this.getInvestmentValue
       }
     ];
   }

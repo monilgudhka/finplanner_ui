@@ -19,6 +19,10 @@ export class InsightsComponent<T> implements OnInit {
     let totalValue: number = 0;
     const labelToValueMap: Map<string, number> = new Map();
     for (const element of this.insight.elements) {
+      if (this.insight.filterFunc !== undefined && !this.insight.filterFunc(element)) {
+        continue;
+      }
+
       const label: string = this.insight.categoryFunc(element);
       let value: number = this.insight.valueFunc(element);
       totalValue = totalValue + value;
