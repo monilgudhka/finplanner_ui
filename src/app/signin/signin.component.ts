@@ -37,7 +37,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   private onSignInSuccess() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/home']);
   }
 
   private onSignInFailure(error: HttpErrorResponse) {

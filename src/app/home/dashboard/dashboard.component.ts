@@ -10,10 +10,10 @@ import { MembersService } from 'src/app/shared/service/members.service';
 import { InsightDetails } from './insights/insight-details.interface';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html'
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   investmentInsights: InsightDetails<Investment>[];
   memberInsights: InsightDetails<Member>[];

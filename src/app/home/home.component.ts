@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../shared/service/auth.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html'
+  selector: 'app-home',
+  templateUrl: './home.component.html'
 })
-export class DashboardComponent {
+export class HomeComponent {
 
   constructor(
     private authService: AuthService,
