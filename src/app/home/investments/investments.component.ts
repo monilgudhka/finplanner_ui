@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -12,7 +13,9 @@ import { InvestmentsService } from 'src/app/shared/service/investments.service';
   templateUrl: './investments.component.html',
   styleUrls: ['./investments.component.css']
 })
-export class InvestmentsComponent implements OnInit, OnDestroy {
+export class InvestmentsComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild(MatSort) sort: MatSort;
+
   columnsToDisplay: string[] = ['title', 'goalTerm', 'assetClass', 'assetType', 'liquidity', 'member', 'investedAmount', 'currentAmount', 'rateOfReturn', 'absoluteReturns', 'absoluteReturnsPercentage', 'edit', 'lastUpdated'];
   datasource: MatTableDataSource<Investment>;
   failure: boolean = false;
@@ -53,6 +56,26 @@ export class InvestmentsComponent implements OnInit, OnDestroy {
       || record.getLiquidity().toLowerCase() === filter
       || record.getGoalTerm().toLowerCase() === filter
       || record.getMember().getName().toLowerCase() === filter;
+  }
+
+  ngAfterViewInit(): void {
+    this.datasource.sort = this.sort;
+    this.datasource.sortingDataAccessor = (item: Investment, property: string) => {
+      switch (property) {
+        case 'title': return item.getTitle();
+        case 'goalTerm': return item.getGoalTerm();
+        case 'assetClass': return item.getAssetClass();
+        case 'assetType': return item.getAssetType();
+        case 'liquidity': return item.getLiquidity();
+        case 'member': return item.getMember().getName();
+        case 'investedAmount': return item.getGrowth().getInvestmentAmount();
+        case 'currentAmount': return item.getGrowth().getCurrentAmount();
+        case 'rateOfReturn': return item.getGrowth().getRateOfReturn();
+        case 'absoluteReturns': return item.getGrowth().getAbsoluteReturns();
+        case 'absoluteReturnsPercentage': return item.getGrowth().getAbsoluteReturnsPercentage();
+        default: return item.getId();
+      }
+    };
   }
 
   ngOnDestroy(): void {
