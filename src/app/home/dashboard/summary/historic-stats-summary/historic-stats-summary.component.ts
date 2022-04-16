@@ -15,42 +15,46 @@ export interface HistoricStatsConfig {
 })
 export class HistoricStatsSummary implements OnInit {
     @Input('config') config: HistoricStatsConfig;
-    changeAmount: number = 0;
-    averageChange: number = 0;
+    netWorthChange: number = 0;
+    returnsChange: number = 0;
+    averageNetWorth: number = 0;
+    averageReturns: number = 0;
 
     ngOnInit(): void {
-        const unitWiseData: Map<string, number> = this.groupByUnit();
-        const changeHistory: Array<number> = this.calculateChange(unitWiseData);
-        this.calculateAverage(changeHistory);
+        const groupedData: Map<string, Growth> = this.groupByUnit();
+
+        const netWorthChanges: number[] = this.calculateChanges(groupedData, g => g.getCurrentAmount());
+        this.averageNetWorth = Utilities.average(netWorthChanges);
+        this.netWorthChange = Utilities.getFirst(netWorthChanges, 0);
+
+        const returnsChanges: number[] = this.calculateChanges(groupedData, g => g.getAbsoluteReturns());
+        this.averageReturns = Utilities.average(returnsChanges);
+        this.returnsChange = Utilities.getFirst(returnsChanges, 0);
     }
 
-    private groupByUnit(): Map<string, number> {
-        const unitWiseData: Map<string, number> = new Map();
+    private groupByUnit(): Map<string, Growth> {
+        const unitWiseData: Map<string, Growth> = new Map();
         for (const growth of this.config.data) {
             const date = growth.getLastUpdatedDate();
             const dateStr = this.config.groupingFunc(date);
             if (unitWiseData.has(dateStr) === false) {
-                unitWiseData.set(dateStr, growth.getCurrentAmount());
+                unitWiseData.set(dateStr, growth);
             }
         }
         return unitWiseData;
     }
 
-    private calculateChange(unitWiseData: Map<string, number>): number[] {
+    private calculateChanges(groupedData: Map<string, Growth>, valueFunc: (growth: Growth) => number): number[] {
         const changeHistory: Array<number> = [];
         let futureValue: number | undefined;
-        for (const value of unitWiseData.values()) {
+        for (const growth of groupedData.values()) {
+            const value = valueFunc(growth);
             if (futureValue !== undefined) {
                 changeHistory.push(Utilities.round(futureValue - value));
             }
             futureValue = value;
         }
         return changeHistory;
-    }
-
-    private calculateAverage(changeHistory: number[]) {
-        const sum: number = changeHistory.reduce((p, c) => p + c, 0);
-        this.averageChange = Utilities.round(sum / changeHistory.length);
     }
 
 }

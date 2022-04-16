@@ -1,7 +1,11 @@
 <mat-card>
     <mat-card-title>{{ config.title }} Stats</mat-card-title>
     <mat-card-content>
-        <p>Change:- {{ changeAmount }}</p>
-        <p>Average {{ config.subtitle }} Change:- {{ averageChange }}</p>
+        <p>
+            <span>Recent NetWorth Change:- {{ netWorthChange }}</span><br />
+            <span>Recent Returns Change:- {{ returnsChange }}</span><br />
+            <span>Average {{ config.subtitle }} NetWorth:- {{ averageNetWorth }}</span><br />
+            <span>Average {{ config.subtitle }} Returns:- {{ averageReturns }}</span>
+        </p>
     </mat-card-content>
 </mat-card>
