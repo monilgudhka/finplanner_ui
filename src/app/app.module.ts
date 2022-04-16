@@ -8,6 +8,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
+import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { InsightsComponent } from './home/dashboard/insights/insights.component';
 import { HistoricStatsSummary } from './home/dashboard/summary/historic-stats-summary/historic-stats-summary.component';
@@ -47,6 +48,7 @@ import { SigninComponent } from './signin/signin.component';
     MemberAddComponent,
     InvestmentEditComponent,
     DoughnutChartComponent,
+    LineChartComponent,
     InsightsComponent,
     NetWorthSummaryComponent,
     ReturnsSummaryComponent,
