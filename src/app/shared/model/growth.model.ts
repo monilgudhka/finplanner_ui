@@ -35,6 +35,10 @@ export class Growth {
         return this.lastUpdated.toDateString();
     }
 
+    getLastUpdatedDate(): Date {
+        return this.lastUpdated;
+    }
+
     getAbsoluteReturns(): number {
         return this.absoluteReturns;
     }

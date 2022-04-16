@@ -8,12 +8,8 @@
             <app-returns-summary [growth]="familyGrowth"></app-returns-summary>
         </mat-grid-tile>
 
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <app-monthly-stats-summary></app-monthly-stats-summary>
-        </mat-grid-tile>
-
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <app-yearly-stats-summary></app-yearly-stats-summary>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" *ngFor="let config of growthHistoryStats">
+            <app-historic-stats-summary [config]="config"></app-historic-stats-summary>
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="2" [rowspan]="2" *ngFor="let insight of memberInsights">

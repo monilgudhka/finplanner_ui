@@ -10,10 +10,9 @@ import { AppComponent } from './app.component';
 import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { InsightsComponent } from './home/dashboard/insights/insights.component';
-import { MonthlyStatsSummary } from './home/dashboard/summary/monthly-stats-summary/monthly-stats-summary.component';
+import { HistoricStatsSummary } from './home/dashboard/summary/historic-stats-summary/historic-stats-summary.component';
 import { NetWorthSummaryComponent } from './home/dashboard/summary/net-worth-summary/net-worth-summary.component';
 import { ReturnsSummaryComponent } from './home/dashboard/summary/returns-summary/returns-summary.component';
-import { YearlyStatsSummary } from './home/dashboard/summary/yearly-stats-summary/yearly-stats-summary.component';
 import { HomeComponent } from './home/home.component';
 import { InvestmentEditComponent } from './home/investments/investment-edit/investment-edit.component';
 import { InvestmentsComponent } from './home/investments/investments.component';
@@ -51,8 +50,7 @@ import { SigninComponent } from './signin/signin.component';
     InsightsComponent,
     NetWorthSummaryComponent,
     ReturnsSummaryComponent,
-    MonthlyStatsSummary,
-    YearlyStatsSummary
+    HistoricStatsSummary
   ],
   imports: [
     BrowserModule,

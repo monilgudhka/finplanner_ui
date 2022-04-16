@@ -5,9 +5,11 @@ import { Growth } from 'src/app/shared/model/growth.model';
 import { Investment } from 'src/app/shared/model/investment.model';
 import { Member } from 'src/app/shared/model/member.model';
 import { FamilyService } from 'src/app/shared/service/family.service';
+import { GrowthHistoryService } from 'src/app/shared/service/growth-history.service';
 import { InvestmentsService } from 'src/app/shared/service/investments.service';
 import { MembersService } from 'src/app/shared/service/members.service';
 import { InsightDetails } from './insights/insight-details.interface';
+import { HistoricStatsConfig } from './summary/historic-stats-summary/historic-stats-summary.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,19 +19,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   investmentInsights: InsightDetails<Investment>[];
   memberInsights: InsightDetails<Member>[];
+  growthHistoryStats: HistoricStatsConfig[];
 
   familyGrowth: Growth;
   investments: Array<Investment>;
   members: Array<Member>;
+  history: Array<Growth>;
 
   private familySubscription: Subscription;
   private membersSubscription: Subscription;
   private investmentsSubscription: Subscription;
+  private historySubscription: Subscription;
 
   constructor(
     private familyService: FamilyService,
     private membersService: MembersService,
     private investmentsService: InvestmentsService,
+    private growthHistoryService: GrowthHistoryService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -38,16 +44,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.familySubscription = this.familyService.subscribeFamily(family => this.familyGrowth = family.getGrowth());
     this.membersSubscription = this.membersService.subscribeMembers(members => this.members = members);
     this.investmentsSubscription = this.investmentsService.subscribeInvestments(investments => this.investments = investments);
+    this.historySubscription = this.growthHistoryService.subscribeGrowthHistory(history => {
+      this.history = history;
+      this.initGrowthHistoryStats();
+    });
 
     const family = this.familyService.getFamily();
     if (family) {
       this.familyGrowth = family.getGrowth();
       this.members = this.membersService.getMembers();
       this.investments = this.investmentsService.getInvestments();
+      this.history = this.growthHistoryService.getGrowthHistory();
     }
 
     this.initMembersInsights();
     this.initInvestmentInsights();
+    this.initGrowthHistoryStats();
   }
 
   private initMembersInsights(): void {
@@ -112,10 +124,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ];
   }
 
+  private initGrowthHistoryStats(): void {
+    if (this.history === undefined) {
+      return;
+    }
+
+    this.growthHistoryStats = [
+      {
+        data: this.history,
+        title: 'Monthly',
+        subtitle: 'MoM',
+        groupingFunc: (date: Date) => date.getFullYear() + '-' + date.getMonth()
+      },
+      {
+        data: this.history,
+        title: 'Yearly',
+        subtitle: 'YoY',
+        groupingFunc: (date: Date) => '' + date.getFullYear()
+      }
+    ]
+  }
+
   ngOnDestroy(): void {
     this.familySubscription.unsubscribe();
     this.membersSubscription.unsubscribe();
     this.investmentsSubscription.unsubscribe();
+    this.historySubscription.unsubscribe();
   }
 
   onCheckDetails(label: string) {
