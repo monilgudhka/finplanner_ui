@@ -10,7 +10,7 @@ export class UpdateBackendResourceService {
 
     updateGrowth(investment: Investment, updateGrowth: UpdateGrowthDto): Observable<void> {
         return this.http.put<void>(
-            'http://localhost:8080//api/growth/investment/' + investment.getId(),
+            'http://localhost:8080/api/growth/investment/' + investment.getId(),
             updateGrowth
         );
     }
