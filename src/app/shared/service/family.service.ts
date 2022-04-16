@@ -54,11 +54,13 @@ export class FamilyService {
     }
 
     snapshot() {
-        this.snapshotService.snapshot(this.family)
-            .subscribe({
-                next: () => this.reload(),
-                error: (error: HttpErrorResponse) => this.registerError(error)
-            });
+        if (this.family != undefined) {
+            this.snapshotService.snapshot(this.family)
+                .subscribe({
+                    next: () => this.reload(),
+                    error: (error: HttpErrorResponse) => this.registerError(error)
+                });
+        }
     }
 
     private registerFamily(family: Family) {
