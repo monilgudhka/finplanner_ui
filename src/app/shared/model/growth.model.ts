@@ -15,6 +15,10 @@ export class Growth {
         this.absoluteReturnsPercentage = Utilities.round(((this.currentAmount / this.investedAmount) - 1) * 100);
     }
 
+    getId(): number {
+        return this.id;
+    }
+
     getInvestmentAmount(): number {
         return this.investedAmount;
     }

@@ -26,12 +26,11 @@ import { GetBackendResourceService } from "./shared/service/backend/get-backend-
 import { SnapshotBackendService } from './shared/service/backend/snapshot-backend.service';
 import { UpdateBackendResourceService } from "./shared/service/backend/update-backend-resource.service";
 import { FamilyService } from './shared/service/family.service';
+import { GrowthHistoryService } from './shared/service/growth-history.service';
 import { InvestmentsService } from './shared/service/investments.service';
 import { MembersService } from './shared/service/members.service';
 import { ResourceService } from './shared/service/resource.service';
 import { SigninComponent } from './signin/signin.component';
-
-
 
 @NgModule({
   declarations: [
@@ -70,6 +69,7 @@ import { SigninComponent } from './signin/signin.component';
     MembersService,
     InvestmentsService,
     ResourceService,
+    GrowthHistoryService,
     CurrencyPipe
   ],
   bootstrap: [AppComponent]
