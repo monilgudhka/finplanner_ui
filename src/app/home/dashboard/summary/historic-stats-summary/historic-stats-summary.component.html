@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-title>{{ config.title }} Stats</mat-card-title>
     <mat-card-content>
-        <ul style="list-style-type: none; padding-inline-start: 0px;">
+        <ul class="no_bullet">
             <li>Recent NetWorth Change:- {{ netWorthChange | currency: 'INR' }}</li>
             <li>Recent Returns Change:- {{ returnsChange | currency: 'INR' }}</li>
             <li>Average {{ config.subtitle }} NetWorth:- {{ averageNetWorth | currency: 'INR' }}</li>

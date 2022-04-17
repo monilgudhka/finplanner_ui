@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgChartsModule } from 'ng2-charts';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
@@ -13,7 +14,6 @@ import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { InsightsComponent } from './home/dashboard/insights/insights.component';
 import { HistoricStatsSummaryComponent } from './home/dashboard/summary/historic-stats-summary/historic-stats-summary.component';
 import { NetWorthSummaryComponent } from './home/dashboard/summary/net-worth-summary/net-worth-summary.component';
-import { ReturnsSummaryComponent } from './home/dashboard/summary/returns-summary/returns-summary.component';
 import { TrendComponent } from './home/dashboard/trend/trend.component';
 import { HomeComponent } from './home/home.component';
 import { InvestmentEditComponent } from './home/investments/investment-edit/investment-edit.component';
@@ -52,7 +52,6 @@ import { SigninComponent } from './signin/signin.component';
     LineChartComponent,
     InsightsComponent,
     NetWorthSummaryComponent,
-    ReturnsSummaryComponent,
     HistoricStatsSummaryComponent,
     TrendComponent
   ],

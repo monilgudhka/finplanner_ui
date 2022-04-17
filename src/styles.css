@@ -9,3 +9,8 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+ul.no_bullet {
+    list-style-type: none;
+    padding-inline-start: 0px;
+}
