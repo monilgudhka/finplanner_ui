@@ -43,12 +43,6 @@ export class LineChartComponent implements OnInit {
             this.chartData.datasets.push({
                 data: data.values,
                 label: data.series,
-                backgroundColor: 'rgba(148,159,177,0.2)',
-                borderColor: 'rgba(148,159,177,1)',
-                pointBackgroundColor: 'rgba(148,159,177,1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(148,159,177,0.8)',
                 fill: 'origin',
             });
         }
