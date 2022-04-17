@@ -22,5 +22,9 @@
             </app-insights>
         </mat-grid-tile>
 
+        <mat-grid-tile [colspan]="4" [rowspan]="4" *ngFor="let trend of growthHistoryTrends">
+            <app-trend [details]="trend"></app-trend>
+        </mat-grid-tile>
+
     </mat-grid-list>
 </div>

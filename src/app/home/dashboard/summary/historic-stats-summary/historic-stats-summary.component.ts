@@ -13,7 +13,7 @@ export interface HistoricStatsConfig {
     selector: 'app-historic-stats-summary',
     templateUrl: './historic-stats-summary.component.html'
 })
-export class HistoricStatsSummary implements OnInit {
+export class HistoricStatsSummaryComponent implements OnInit {
     @Input('config') config: HistoricStatsConfig;
     netWorthChange: number = 0;
     returnsChange: number = 0;

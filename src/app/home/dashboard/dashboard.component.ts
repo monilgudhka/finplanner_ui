@@ -10,6 +10,7 @@ import { InvestmentsService } from 'src/app/shared/service/investments.service';
 import { MembersService } from 'src/app/shared/service/members.service';
 import { InsightDetails } from './insights/insight-details.interface';
 import { HistoricStatsConfig } from './summary/historic-stats-summary/historic-stats-summary.component';
+import { TrendDetails } from './trend/trend-details.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,9 +18,10 @@ import { HistoricStatsConfig } from './summary/historic-stats-summary/historic-s
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  investmentInsights: InsightDetails<Investment>[];
-  memberInsights: InsightDetails<Member>[];
   growthHistoryStats: HistoricStatsConfig[];
+  memberInsights: InsightDetails<Member>[];
+  investmentInsights: InsightDetails<Investment>[];
+  growthHistoryTrends: TrendDetails<Growth>[];
 
   familyGrowth: Growth;
   investments: Array<Investment>;
@@ -47,6 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.historySubscription = this.growthHistoryService.subscribeGrowthHistory(history => {
       this.history = history;
       this.initGrowthHistoryStats();
+      this.initGrowthHistoryTrends();
     });
 
     const family = this.familyService.getFamily();
@@ -57,9 +60,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.history = this.growthHistoryService.getGrowthHistory();
     }
 
+
+    this.initGrowthHistoryStats();
     this.initMembersInsights();
     this.initInvestmentInsights();
-    this.initGrowthHistoryStats();
+    this.initGrowthHistoryTrends();
+  }
+
+  private initGrowthHistoryStats(): void {
+    if (this.history === undefined) {
+      return;
+    }
+
+    this.growthHistoryStats = [
+      {
+        data: this.history,
+        title: 'Monthly',
+        subtitle: 'MoM',
+        groupingFunc: (date: Date) => date.getFullYear() + '-' + date.getMonth()
+      },
+      {
+        data: this.history,
+        title: 'Yearly',
+        subtitle: 'YoY',
+        groupingFunc: (date: Date) => '' + date.getFullYear()
+      }
+    ]
   }
 
   private initMembersInsights(): void {
@@ -124,25 +150,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ];
   }
 
-  private initGrowthHistoryStats(): void {
+  private initGrowthHistoryTrends(): void {
     if (this.history === undefined) {
       return;
     }
 
-    this.growthHistoryStats = [
+    this.growthHistoryTrends = [
       {
-        data: this.history,
-        title: 'Monthly',
-        subtitle: 'MoM',
-        groupingFunc: (date: Date) => date.getFullYear() + '-' + date.getMonth()
-      },
-      {
-        data: this.history,
-        title: 'Yearly',
-        subtitle: 'YoY',
-        groupingFunc: (date: Date) => '' + date.getFullYear()
+        dataset: this.history,
+        labelFunc: (growth) => {
+          const date = growth.getLastUpdatedDate();
+          return date.getFullYear() + '-' + date.getMonth();
+        },
+        seriesDetails: [
+          {
+            series: 'Net Worth',
+            valueFunc: (growth) => growth.getCurrentAmount()
+          },
+          {
+            series: 'Returns',
+            valueFunc: (growth) => growth.getAbsoluteReturns()
+          }
+        ]
       }
-    ]
+    ];
   }
 
   ngOnDestroy(): void {

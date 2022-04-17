@@ -11,9 +11,10 @@ import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.c
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { InsightsComponent } from './home/dashboard/insights/insights.component';
-import { HistoricStatsSummary } from './home/dashboard/summary/historic-stats-summary/historic-stats-summary.component';
+import { HistoricStatsSummaryComponent } from './home/dashboard/summary/historic-stats-summary/historic-stats-summary.component';
 import { NetWorthSummaryComponent } from './home/dashboard/summary/net-worth-summary/net-worth-summary.component';
 import { ReturnsSummaryComponent } from './home/dashboard/summary/returns-summary/returns-summary.component';
+import { TrendComponent } from './home/dashboard/trend/trend.component';
 import { HomeComponent } from './home/home.component';
 import { InvestmentEditComponent } from './home/investments/investment-edit/investment-edit.component';
 import { InvestmentsComponent } from './home/investments/investments.component';
@@ -52,7 +53,8 @@ import { SigninComponent } from './signin/signin.component';
     InsightsComponent,
     NetWorthSummaryComponent,
     ReturnsSummaryComponent,
-    HistoricStatsSummary
+    HistoricStatsSummaryComponent,
+    TrendComponent
   ],
   imports: [
     BrowserModule,

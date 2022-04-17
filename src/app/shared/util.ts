@@ -13,4 +13,12 @@ export class Utilities {
         return (values.length > 0) ? values[0] : d;
     }
 
+    public static toList<T>(iterator: IterableIterator<T>): T[] {
+        const values: T[] = [];
+        for (const value of iterator) {
+            values.push(value);
+        }
+        return values;
+    }
+
 }
