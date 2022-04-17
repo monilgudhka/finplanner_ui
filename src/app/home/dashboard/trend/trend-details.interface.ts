@@ -4,6 +4,7 @@ export interface SeriesDetail<T> {
 }
 
 export interface TrendDetails<T> {
+    title: string,
     dataset: T[],
     labelFunc: (data: T) => string,
     seriesDetails: SeriesDetail<T>[]

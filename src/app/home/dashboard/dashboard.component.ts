@@ -161,6 +161,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private initGrowthHistoryTrends(): void {
     this.growthHistoryTrends = [
       {
+        title: 'Trend in total growth',
         dataset: this.history,
         labelFunc: (growth) => {
           const date = growth.getLastUpdatedDate();
