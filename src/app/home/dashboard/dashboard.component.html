@@ -1,7 +1,11 @@
 <div class="grid-container">
     <mat-grid-list cols="4" rowHeight="200px">
-        <mat-grid-tile [colspan]="3" [rowspan]="1">
-            <app-summary [growth]="familyGrowth"></app-summary>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <app-net-worth-summary [growth]="familyGrowth"></app-net-worth-summary>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1" *ngFor="let config of growthHistoryStats">
+            <app-historic-stats-summary [config]="config"></app-historic-stats-summary>
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="2" [rowspan]="2" *ngFor="let insight of memberInsights">
@@ -12,6 +16,10 @@
         <mat-grid-tile [colspan]="2" [rowspan]="2" *ngFor="let insight of investmentInsights">
             <app-insights [insight]="insight" (checkDetails)="onCheckDetails($event)">
             </app-insights>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="4" [rowspan]="4" *ngFor="let trend of growthHistoryTrends">
+            <app-trend [details]="trend"></app-trend>
         </mat-grid-tile>
 
     </mat-grid-list>

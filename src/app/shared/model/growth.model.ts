@@ -1,13 +1,23 @@
 import { Utilities } from "../util";
 
 export class Growth {
+    private absoluteReturns: number;
+    private absoluteReturnsPercentage: number;
+
     constructor(
         private id: number,
         private investedAmount: number,
         private currentAmount: number,
         private rateOfReturn: number,
         private lastUpdated: Date,
-    ) { }
+    ) {
+        this.absoluteReturns = Utilities.round(this.currentAmount - this.investedAmount);
+        this.absoluteReturnsPercentage = Utilities.round(((this.currentAmount / this.investedAmount) - 1) * 100);
+    }
+
+    getId(): number {
+        return this.id;
+    }
 
     getInvestmentAmount(): number {
         return this.investedAmount;
@@ -25,12 +35,16 @@ export class Growth {
         return this.lastUpdated.toDateString();
     }
 
+    getLastUpdatedDate(): Date {
+        return this.lastUpdated;
+    }
+
     getAbsoluteReturns(): number {
-        return Utilities.round(this.currentAmount - this.investedAmount);
+        return this.absoluteReturns;
     }
 
     getAbsoluteReturnsPercentage(): number {
-        return Utilities.round(((this.currentAmount / this.investedAmount) - 1) * 100);
+        return this.absoluteReturnsPercentage;
     }
 
     setInvestmentAmount(amount: number) {

@@ -66,7 +66,7 @@ export class ConverterService {
         );
     }
 
-    private static toGrowth(growthDto: GrowthDto): Growth {
+    public static toGrowth(growthDto: GrowthDto): Growth {
         return new Growth(
             growthDto.id,
             growthDto.invested_amount,

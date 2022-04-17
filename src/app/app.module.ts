@@ -9,9 +9,12 @@ import { NgChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
+import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { InsightsComponent } from './home/dashboard/insights/insights.component';
-import { SummaryComponent } from './home/dashboard/summary/summary.component';
+import { HistoricStatsSummaryComponent } from './home/dashboard/summary/historic-stats-summary/historic-stats-summary.component';
+import { NetWorthSummaryComponent } from './home/dashboard/summary/net-worth-summary/net-worth-summary.component';
+import { TrendComponent } from './home/dashboard/trend/trend.component';
 import { HomeComponent } from './home/home.component';
 import { InvestmentEditComponent } from './home/investments/investment-edit/investment-edit.component';
 import { InvestmentsComponent } from './home/investments/investments.component';
@@ -24,13 +27,14 @@ import { AuthService } from './shared/service/auth.service';
 import { AuthGuardService } from './shared/service/authguard.service';
 import { CreateBackendResourceService } from "./shared/service/backend/create-backend-resource.service";
 import { GetBackendResourceService } from "./shared/service/backend/get-backend-resource.service";
+import { SnapshotBackendService } from './shared/service/backend/snapshot-backend.service';
 import { UpdateBackendResourceService } from "./shared/service/backend/update-backend-resource.service";
 import { FamilyService } from './shared/service/family.service';
+import { GrowthHistoryService } from './shared/service/growth-history.service';
 import { InvestmentsService } from './shared/service/investments.service';
 import { MembersService } from './shared/service/members.service';
 import { ResourceService } from './shared/service/resource.service';
 import { SigninComponent } from './signin/signin.component';
-
 
 @NgModule({
   declarations: [
@@ -45,8 +49,11 @@ import { SigninComponent } from './signin/signin.component';
     MemberAddComponent,
     InvestmentEditComponent,
     DoughnutChartComponent,
-    SummaryComponent,
-    InsightsComponent
+    LineChartComponent,
+    InsightsComponent,
+    NetWorthSummaryComponent,
+    HistoricStatsSummaryComponent,
+    TrendComponent
   ],
   imports: [
     BrowserModule,
@@ -64,10 +71,12 @@ import { SigninComponent } from './signin/signin.component';
     GetBackendResourceService,
     CreateBackendResourceService,
     UpdateBackendResourceService,
+    SnapshotBackendService,
     FamilyService,
     MembersService,
     InvestmentsService,
     ResourceService,
+    GrowthHistoryService,
     CurrencyPipe
   ],
   bootstrap: [AppComponent]

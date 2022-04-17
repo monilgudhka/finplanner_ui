@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-title>Net Worth:- {{ growth.getCurrentAmount() | currency:'INR' }}</mat-card-title>
+    <mat-card-subtitle>{{ growth.getLastUpdated() }}</mat-card-subtitle>
+    <mat-card-content>
+        <ul class="no_bullet">
+            <li>Amount Invested:- {{ growth.getInvestmentAmount() | currency:'INR' }}</li>
+            <li>Absolute Returns:- {{ growth.getAbsoluteReturns() | currency:'INR' }} ({{
+                growth.getAbsoluteReturnsPercentage() }}%)</li>
+            <li>XIRR:- {{ growth.getRateOfReturn() }}%</li>
+        </ul>
+    </mat-card-content>
+</mat-card>

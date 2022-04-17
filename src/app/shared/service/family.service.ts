@@ -4,6 +4,7 @@ import { Subject, Subscription } from "rxjs";
 import { Family } from "../model/family.model";
 import { CreateBackendResourceService } from "./backend/create-backend-resource.service";
 import { GetBackendResourceService } from "./backend/get-backend-resource.service";
+import { SnapshotBackendService } from "./backend/snapshot-backend.service";
 
 @Injectable()
 export class FamilyService {
@@ -14,7 +15,8 @@ export class FamilyService {
 
     constructor(
         private createResource: CreateBackendResourceService,
-        private getResource: GetBackendResourceService
+        private getResource: GetBackendResourceService,
+        private snapshotService: SnapshotBackendService
     ) { }
 
     subscribeFamily(next: (value: Family) => void): Subscription {
@@ -49,6 +51,16 @@ export class FamilyService {
 
     reload() {
         this.load(this.family.getLoginId());
+    }
+
+    snapshot() {
+        if (this.family != undefined) {
+            this.snapshotService.snapshot(this.family)
+                .subscribe({
+                    next: () => this.reload(),
+                    error: (error: HttpErrorResponse) => this.registerError(error)
+                });
+        }
     }
 
     private registerFamily(family: Family) {
