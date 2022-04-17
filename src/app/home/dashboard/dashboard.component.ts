@@ -44,34 +44,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.familySubscription = this.familyService.subscribeFamily(family => this.familyGrowth = family.getGrowth());
-    this.membersSubscription = this.membersService.subscribeMembers(members => this.members = members);
-    this.investmentsSubscription = this.investmentsService.subscribeInvestments(investments => this.investments = investments);
-    this.historySubscription = this.growthHistoryService.subscribeGrowthHistory(history => {
-      this.history = history;
-      this.initGrowthHistoryStats();
-      this.initGrowthHistoryTrends();
-    });
+    this.membersSubscription = this.membersService.subscribeMembers(members => this.initMembers(members));
+    this.investmentsSubscription = this.investmentsService.subscribeInvestments(investments => this.initInvestments(investments));
+    this.historySubscription = this.growthHistoryService.subscribeGrowthHistory(history => this.initGrowthHistory(history));
 
     const family = this.familyService.getFamily();
     if (family) {
       this.familyGrowth = family.getGrowth();
-      this.members = this.membersService.getMembers();
-      this.investments = this.investmentsService.getInvestments();
-      this.history = this.growthHistoryService.getGrowthHistory();
+      this.initMembers(this.membersService.getMembers());
+      this.initInvestments(this.investmentsService.getInvestments());
+      this.initGrowthHistory(this.growthHistoryService.getGrowthHistory());
     }
+  }
 
+  private initGrowthHistory(history: Growth[]): void {
+    if (history !== undefined) {
+      this.history = history;
+      this.initGrowthHistoryStats();
+      this.initGrowthHistoryTrends();
+    }
+  }
 
-    this.initGrowthHistoryStats();
-    this.initMembersInsights();
-    this.initInvestmentInsights();
-    this.initGrowthHistoryTrends();
+  private initMembers(members: Member[]): void {
+    if (members !== undefined) {
+      this.members = members;
+      this.initMembersInsights();
+    }
+  }
+
+  private initInvestments(investments: Investment[]): void {
+    if (investments !== undefined) {
+      this.investments = investments;
+      this.initInvestmentInsights();
+    }
   }
 
   private initGrowthHistoryStats(): void {
-    if (this.history === undefined) {
-      return;
-    }
-
     this.growthHistoryStats = [
       {
         data: this.history,
@@ -151,10 +159,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   private initGrowthHistoryTrends(): void {
-    if (this.history === undefined) {
-      return;
-    }
-
     this.growthHistoryTrends = [
       {
         dataset: this.history,
