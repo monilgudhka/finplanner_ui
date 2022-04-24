@@ -35,6 +35,8 @@ import { InvestmentsService } from './shared/service/investments.service';
 import { MembersService } from './shared/service/members.service';
 import { ResourceService } from './shared/service/resource.service';
 import { SigninComponent } from './signin/signin.component';
+import { TransactionsComponent } from './home/transactions/transactions.component';
+import { NgxCsvParserModule } from 'ngx-csv-parser';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { SigninComponent } from './signin/signin.component';
     InsightsComponent,
     NetWorthSummaryComponent,
     HistoricStatsSummaryComponent,
-    TrendComponent
+    TrendComponent,
+    TransactionsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ import { SigninComponent } from './signin/signin.component';
     MaterialModule,
     HttpClientModule,
     AppRoutingModule,
-    NgChartsModule
+    NgChartsModule,
+    NgxCsvParserModule
   ],
   providers: [
     AuthService,
