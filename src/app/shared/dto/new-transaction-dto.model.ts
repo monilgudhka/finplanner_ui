@@ -1,11 +1,9 @@
-import { Growth } from "../model/growth.model";
-
 export interface NewTransactionDto {
-    timestamp: Date,
+    timestamp: string,
     amount: number,
     description: string,
     isDebit: boolean,
-    fromAccount?: Growth,
-    toAccount?: Growth,
-    transactionType?: string
+    from_account?: number,
+    to_account?: number,
+    transaction_type?: string
 }

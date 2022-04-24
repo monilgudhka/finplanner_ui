@@ -206,12 +206,12 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
   }
 
   private populateTransaction(): void {
-    this.transaction.transactionType = this.selectedConfig.name;
+    this.transaction.transaction_type = this.selectedConfig.name;
     if (this.selectedConfig.from.enable) {
-      this.transaction.fromAccount = this.detailsForm.value.from.getGrowth().getId();
+      this.transaction.from_account = this.detailsForm.value.from.getGrowth().getId();
     }
     if (this.selectedConfig.to.enable) {
-      this.transaction.toAccount = this.detailsForm.value.to.getGrowth().getId();
+      this.transaction.to_account = this.detailsForm.value.to.getGrowth().getId();
     }
   }
 
