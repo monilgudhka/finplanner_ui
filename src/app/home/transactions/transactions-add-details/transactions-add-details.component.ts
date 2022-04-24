@@ -1,10 +1,14 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NewTransactionDto } from 'src/app/shared/dto/new-transaction-dto.model';
 import { Investment } from 'src/app/shared/model/investment.model';
 import { InvestmentsService } from 'src/app/shared/service/investments.service';
 import { TransactionsAddService } from 'src/app/shared/service/transactions-add.service';
+import { Utilities } from 'src/app/shared/util';
 
 export interface TransactionTypeAccountConfig {
   enable: boolean,
@@ -30,13 +34,15 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
   transactionTypeConfigList: TransactionTypeConfig[];
   selectedConfig: TransactionTypeConfig;
   investments: Investment[];
+  detailsForm: FormGroup;
 
   private investmentSubscription: Subscription;
 
   constructor(
     private transactionAddService: TransactionsAddService,
     private router: Router,
-    private investmentService: InvestmentsService
+    private investmentService: InvestmentsService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -77,11 +83,11 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
         displayOnCredit: false,
         displayOnDebit: true,
         from: {
-          enable: false
-        },
-        to: {
           enable: true,
           filter: this.isBankAccounts
+        },
+        to: {
+          enable: false
         }
       },
       {
@@ -124,7 +130,12 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
           filter: this.isBankAccounts
         }
       }
-    ]
+    ];
+
+    this.detailsForm = new FormGroup({
+      from: new FormControl(null, [this.fromRequired.bind(this)]),
+      to: new FormControl(null, [this.toRequired.bind(this)])
+    })
 
     this.init();
   }
@@ -150,6 +161,24 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
     return investment.getAssetClass() !== 'BANK';
   }
 
+  private fromRequired(control: AbstractControl): { [key: string]: boolean } | null {
+    if (this.selectedConfig !== undefined
+      && this.selectedConfig.from.enable
+      && control.value === null) {
+      return { 'from': true };
+    }
+    return null;
+  }
+
+  private toRequired(control: AbstractControl): { [key: string]: boolean } | null {
+    if (this.selectedConfig !== undefined
+      && this.selectedConfig.to.enable
+      && control.value === null) {
+      return { 'to': true };
+    }
+    return null;
+  }
+
   filterTransactionTypeConfig() {
     return this.transactionTypeConfigList
       .filter(t => this.transaction.isDebit ? t.displayOnDebit : t.displayOnCredit);
@@ -160,6 +189,38 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
       return this.investments.filter(filterFunc);
     }
     return this.investments;
+  }
+
+  onSubmit(): void {
+    this.populateTransaction();
+    this.transactionAddService.markComplete();
+    if (this.transactionAddService.anyPending()) {
+      this.init();
+    } else {
+      this.transactionAddService.pushToBackend()
+        .subscribe({
+          next: transactions => this.onSuccess(),
+          error: error => this.onFailure(error)
+        });
+    }
+  }
+
+  private populateTransaction(): void {
+    this.transaction.transactionType = this.selectedConfig.name;
+    if (this.selectedConfig.from.enable) {
+      this.transaction.fromAccount = this.detailsForm.value.from.getGrowth().getId();
+    }
+    if (this.selectedConfig.to.enable) {
+      this.transaction.toAccount = this.detailsForm.value.to.getGrowth().getId();
+    }
+  }
+
+  private onSuccess() {
+    this.router.navigate(['home', 'transactions']);
+  }
+
+  private onFailure(error: HttpErrorResponse) {
+    Utilities.displaySnackBar(this.snackBar, error);
   }
 
 }

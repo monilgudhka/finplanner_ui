@@ -31,25 +31,48 @@
     </div>
     <div class="row">
         <div class="col-xs-12" *ngIf="selectedConfig">
-            <span>{{ selectedConfig.title }} &nbsp;</span>
+            <form [formGroup]="detailsForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span>{{ selectedConfig.title }} &nbsp;</span>
+                    </div>
+                </div>
 
-            <mat-form-field appearance="outline" *ngIf="selectedConfig.from.enable">
-                <mat-label>from</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let investment of filterInvestments(selectedConfig.from.filter)"
-                        [value]="investment">{{ investment.getTitle() }} - {{ investment.getMember().getName() }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <mat-form-field appearance="outline" *ngIf="selectedConfig.from.enable">
+                            <mat-label>from</mat-label>
+                            <mat-select formControlName="from">
+                                <mat-option *ngFor="let investment of filterInvestments(selectedConfig.from.filter)"
+                                    [value]="investment">{{ investment.getTitle() }} - {{
+                                    investment.getMember().getName() }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Please select from account</mat-error>
+                        </mat-form-field>
+                    </div>
 
-            <mat-form-field appearance="outline" *ngIf="selectedConfig.to.enable">
-                <mat-label>to</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let investment of filterInvestments(selectedConfig.to.filter)"
-                        [value]="investment">{{ investment.getTitle() }} - {{ investment.getMember().getName() }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+                    <div class="col-xs-4">
+                        <mat-form-field appearance="outline" *ngIf="selectedConfig.to.enable">
+                            <mat-label>to</mat-label>
+                            <mat-select formControlName="to">
+                                <mat-option *ngFor="let investment of filterInvestments(selectedConfig.to.filter)"
+                                    [value]="investment">{{ investment.getTitle() }} - {{
+                                    investment.getMember().getName() }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Please select to account</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="submit" mat-raised-button color="primary"
+                            [disabled]="!this.detailsForm.valid">Add</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

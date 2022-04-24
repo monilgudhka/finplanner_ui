@@ -1,8 +1,15 @@
+import { Injectable } from "@angular/core";
+import { Observable, tap } from "rxjs";
 import { NewTransactionDto } from "../dto/new-transaction-dto.model";
+import { Transaction } from "../model/transaction.model";
+import { TransactionsBackendService } from "./backend/transactions-backend.service";
 
+@Injectable()
 export class TransactionsAddService {
-    pendingQueue: NewTransactionDto[] = [];
-    completedList: NewTransactionDto[] = [];
+    private pendingQueue: NewTransactionDto[] = [];
+    private completedList: NewTransactionDto[] = [];
+
+    constructor(private transactionBackend: TransactionsBackendService) { }
 
     pushPending(newTransactions: NewTransactionDto[]): void {
         newTransactions.forEach((trans) => this.pendingQueue.push(trans));
@@ -13,7 +20,7 @@ export class TransactionsAddService {
     }
 
     peekPending(): NewTransactionDto {
-        return this.pendingQueue[0];
+        return this.pendingQueue[this.pendingQueue.length - 1];
     }
 
     markComplete(): void {
@@ -23,12 +30,12 @@ export class TransactionsAddService {
         }
     }
 
-    getAllCompleted(): NewTransactionDto[] {
-        return this.completedList.splice(0);
-    }
-
-    resetCompleted(): void {
-        this.completedList = [];
+    pushToBackend(): Observable<Transaction[]> {
+        return this.transactionBackend
+            .createTransactions(this.completedList)
+            .pipe(tap(transactions => {
+                this.completedList = [];
+            }));
     }
 
 }

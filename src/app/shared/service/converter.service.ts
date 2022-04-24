@@ -2,10 +2,12 @@ import { FamilyDto } from "../dto/family-dto.model";
 import { GrowthDto } from "../dto/growth-dto.model";
 import { InvestmentDto } from "../dto/investment-dto.model";
 import { MemberDto } from "../dto/member-dto.model";
+import { TransactionDto } from "../dto/transaction-dto.model";
 import { Family } from "../model/family.model";
 import { Growth } from "../model/growth.model";
 import { Investment } from "../model/investment.model";
 import { Member } from "../model/member.model";
+import { Transaction } from "../model/transaction.model";
 
 export class ConverterService {
 
@@ -73,6 +75,16 @@ export class ConverterService {
             growthDto.current_amount,
             growthDto.rate_of_return,
             new Date(growthDto.last_updated)
+        );
+    }
+
+    public static toTransaction(transactionDto: TransactionDto): Transaction {
+        return new Transaction(
+            transactionDto.id,
+            transactionDto.timestamp,
+            transactionDto.amount,
+            transactionDto.description,
+            transactionDto.transaction_type
         );
     }
 }

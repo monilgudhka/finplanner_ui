@@ -40,6 +40,7 @@ import { NgxCsvParserModule } from 'ngx-csv-parser';
 import { TransactionsAddComponent } from './home/transactions/transactions-add/transactions-add.component';
 import { TransactionsAddDetailsComponent } from './home/transactions/transactions-add-details/transactions-add-details.component';
 import { TransactionsAddService } from './shared/service/transactions-add.service';
+import { TransactionsBackendService } from './shared/service/backend/transactions-backend.service';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { TransactionsAddService } from './shared/service/transactions-add.servic
     ResourceService,
     GrowthHistoryService,
     CurrencyPipe,
-    TransactionsAddService
+    TransactionsAddService,
+    TransactionsBackendService
   ],
   bootstrap: [AppComponent]
 })
