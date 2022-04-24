@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxCsvParser } from 'ngx-csv-parser';
 import { NewTransactionDto } from 'src/app/shared/dto/new-transaction-dto.model';
+import { TransactionsAddService } from 'src/app/shared/service/transactions-add.service';
 
 @Component({
   selector: 'app-transactions-add',
@@ -10,7 +12,12 @@ import { NewTransactionDto } from 'src/app/shared/dto/new-transaction-dto.model'
 export class TransactionsAddComponent implements OnInit {
   newTransactionsForm: FormGroup;
 
-  constructor(private ngxCsvParser: NgxCsvParser) { }
+  constructor(
+    private ngxCsvParser: NgxCsvParser,
+    private transactionAddService: TransactionsAddService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.newTransactionsForm = new FormGroup({
@@ -18,27 +25,23 @@ export class TransactionsAddComponent implements OnInit {
     });
   }
 
-  onSubmit(formDirective: FormGroupDirective): void {
-    const processed = this.processText(this.newTransactionsForm.value.transactions);
-    if (processed) {
-      formDirective.resetForm();
+  onSubmit(): void {
+    const newTransactions: NewTransactionDto[] = this.parse(this.newTransactionsForm.value.transactions);
+    this.transactionAddService.pushPending(newTransactions);
+    if (this.transactionAddService.anyPending()) {
+      this.router.navigate(['add', 'details'], { relativeTo: this.route });
     }
   }
 
-  private processText(text: string): boolean {
-    const newTransactions: NewTransactionDto[] = this.parseTransactions(text);
-    console.log(newTransactions);
-    return true;
-  }
-
-  private parseTransactions(text: string): NewTransactionDto[] {
-    const rawTransactions: any[][] = this.ngxCsvParser.csvStringToArray(text, ",");
+  private parse(text: string): NewTransactionDto[] {
+    const raw: any[][] = this.ngxCsvParser.csvStringToArray(text, ",");
     const newTransactions: NewTransactionDto[] = [];
-    for (const record of rawTransactions) {
-      const amount = record[8] === 'CR' ? record[6] : record[5];
+    for (const record of raw) {
+      const isDebit = record[8] === 'DR';
       newTransactions.push({
         timestamp: record[1],
-        amount: amount,
+        amount: isDebit ? record[5] : record[6],
+        isDebit: isDebit,
         description: record[3]
       });
     }

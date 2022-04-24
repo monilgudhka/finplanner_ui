@@ -25,7 +25,7 @@ const routes: Routes = [
       {
         path: 'transactions', component: TransactionsComponent, children: [
           { path: '', component: TransactionsAddComponent, pathMatch: 'full' },
-          { path: 'add/:id/details', component: TransactionsAddDetailsComponent }
+          { path: 'add/details', component: TransactionsAddDetailsComponent }
         ]
       }
     ]
