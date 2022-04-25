@@ -34,18 +34,31 @@ export class TransactionsAddComponent implements OnInit {
   }
 
   private parse(text: string): NewTransactionDto[] {
-    const raw: any[][] = this.ngxCsvParser.csvStringToArray(text, ",");
+    const raw: any[][] = this.ngxCsvParser.csvStringToArray(text.trim(), ",");
     const newTransactions: NewTransactionDto[] = [];
     for (const record of raw) {
       const isDebit = record[8] === 'DR';
       newTransactions.push({
-        timestamp: record[1],
-        amount: isDebit ? record[5] : record[6],
+        timestamp: this.formatDate(record[1]),
+        amount: this.formatAmount(isDebit ? record[5] : record[6]),
         isDebit: isDebit,
         description: record[3]
       });
     }
     return newTransactions;
+  }
+
+  private formatDate(timestamp: string): Date {
+    // '04/04/2020 04:59 PM'
+    const data: string[] = timestamp.split(/[\/ :]/g);
+    const date: Date = new Date();
+    date.setUTCFullYear(parseInt(data[2]), parseInt(data[1]) - 1, parseInt(data[0]));
+    date.setUTCHours(parseInt(data[3]) + (data[5] === 'PM' ? 12 : 0), parseInt(data[4]), 0, 0);
+    return date;
+  }
+
+  private formatAmount(amount: string): number {
+    return parseInt(amount.replace(',', ''));
   }
 
 }

@@ -1,5 +1,5 @@
 export interface NewTransactionDto {
-    timestamp: string,
+    timestamp: Date,
     amount: number,
     description: string,
     isDebit: boolean,
