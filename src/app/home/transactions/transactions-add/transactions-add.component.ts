@@ -42,7 +42,7 @@ export class TransactionsAddComponent implements OnInit {
         timestamp: this.formatDate(record[1]),
         amount: this.formatAmount(isDebit ? record[5] : record[6]),
         isDebit: isDebit,
-        description: record[3]
+        description: record[3].trim()
       });
     }
     return newTransactions;
@@ -58,7 +58,7 @@ export class TransactionsAddComponent implements OnInit {
   }
 
   private formatAmount(amount: string): number {
-    return parseInt(amount.replace(',', ''));
+    return parseInt(amount.replace(/,/g, ''));
   }
 
 }
