@@ -23,7 +23,6 @@ export class TrendComponent<T> implements OnInit {
         for (const seriesDetail of this.details.seriesDetails) {
             this.chartConfig.datasets.push(this.getDataset(labels, groupedData, seriesDetail));
         }
-        console.log(this.chartConfig);
     }
 
     private groupByUnit(): Map<string, T> {

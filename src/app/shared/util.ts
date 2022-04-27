@@ -1,3 +1,6 @@
+import { HttpErrorResponse } from "@angular/common/http";
+import { MatSnackBar } from "@angular/material/snack-bar";
+
 export class Utilities {
 
     public static round(value: number, decimal: number = 2): number {
@@ -19,6 +22,17 @@ export class Utilities {
             values.push(value);
         }
         return values;
+    }
+
+    public static displaySnackBar(snackBar: MatSnackBar, error: HttpErrorResponse) {
+        let message = error.message;
+        if (typeof (error.error) === 'string') {
+            message = <string>error.error;
+        }
+
+        snackBar.open(message, 'Dismiss', {
+            duration: 5000
+        });
     }
 
 }

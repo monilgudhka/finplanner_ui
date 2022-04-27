@@ -8,6 +8,9 @@ import { MembersComponent } from './home/members/members.component';
 import { AuthGuardService } from './shared/service/authguard.service';
 import { SigninComponent } from './signin/signin.component';
 import { InvestmentEditComponent } from './home/investments/investment-edit/investment-edit.component';
+import { TransactionsComponent } from './home/transactions/transactions.component';
+import { TransactionsAddComponent } from './home/transactions/transactions-add/transactions-add.component';
+import { TransactionsAddDetailsComponent } from './home/transactions/transactions-add-details/transactions-add-details.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent },
@@ -18,7 +21,13 @@ const routes: Routes = [
       { path: 'investments/new', component: NewInvestmentComponent },
       { path: 'investments/:id/edit', component: InvestmentEditComponent },
       { path: 'investments', component: InvestmentsComponent },
-      { path: 'members', component: MembersComponent }
+      { path: 'members', component: MembersComponent },
+      {
+        path: 'transactions', component: TransactionsComponent, children: [
+          { path: '', component: TransactionsAddComponent, pathMatch: 'full' },
+          { path: 'add/details', component: TransactionsAddDetailsComponent }
+        ]
+      }
     ]
   }
 ];

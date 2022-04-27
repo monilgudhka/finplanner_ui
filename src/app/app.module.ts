@@ -35,6 +35,12 @@ import { InvestmentsService } from './shared/service/investments.service';
 import { MembersService } from './shared/service/members.service';
 import { ResourceService } from './shared/service/resource.service';
 import { SigninComponent } from './signin/signin.component';
+import { TransactionsComponent } from './home/transactions/transactions.component';
+import { NgxCsvParserModule } from 'ngx-csv-parser';
+import { TransactionsAddComponent } from './home/transactions/transactions-add/transactions-add.component';
+import { TransactionsAddDetailsComponent } from './home/transactions/transactions-add-details/transactions-add-details.component';
+import { TransactionsAddService } from './shared/service/transactions-add.service';
+import { TransactionsBackendService } from './shared/service/backend/transactions-backend.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +59,10 @@ import { SigninComponent } from './signin/signin.component';
     InsightsComponent,
     NetWorthSummaryComponent,
     HistoricStatsSummaryComponent,
-    TrendComponent
+    TrendComponent,
+    TransactionsComponent,
+    TransactionsAddComponent,
+    TransactionsAddDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +72,8 @@ import { SigninComponent } from './signin/signin.component';
     MaterialModule,
     HttpClientModule,
     AppRoutingModule,
-    NgChartsModule
+    NgChartsModule,
+    NgxCsvParserModule
   ],
   providers: [
     AuthService,
@@ -77,7 +87,9 @@ import { SigninComponent } from './signin/signin.component';
     InvestmentsService,
     ResourceService,
     GrowthHistoryService,
-    CurrencyPipe
+    CurrencyPipe,
+    TransactionsAddService,
+    TransactionsBackendService
   ],
   bootstrap: [AppComponent]
 })

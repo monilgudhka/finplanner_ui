@@ -1,0 +1,78 @@
+<div *ngIf="transaction">
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="h4">{{ transaction.description }}</p>
+            <p class="help-block">{{ transaction.timestamp | date: 'dd MMM, yyyy hh:mm a' : 'UTC' }}</p>
+            <p *ngIf="transaction.isDebit">
+                <span class="debit">
+                    {{ transaction.amount | currency: 'INR' }}
+                    <span class="material-icons">arrow_downward</span>
+                </span>
+            </p>
+            <p *ngIf="!transaction.isDebit">
+                <span class="credit">
+                    {{ transaction.amount | currency: 'INR' }}
+                    <span class="material-icons">arrow_upward</span>
+                </span>
+            </p>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-xs-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Transaction Type: </mat-label>
+                <mat-select [(value)]="selectedConfig">
+                    <mat-option *ngFor="let type of filterTransactionTypeConfig()" [value]="type">{{ type.title }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12" *ngIf="selectedConfig">
+            <form [formGroup]="detailsForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span>{{ selectedConfig.title }} &nbsp;</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <mat-form-field appearance="outline" *ngIf="selectedConfig.from.enable">
+                            <mat-label>from</mat-label>
+                            <mat-select formControlName="from">
+                                <mat-option *ngFor="let investment of filterInvestments(selectedConfig.from.filter)"
+                                    [value]="investment">{{ investment.getTitle() }} - {{
+                                    investment.getMember().getName() }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Please select from account</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <mat-form-field appearance="outline" *ngIf="selectedConfig.to.enable">
+                            <mat-label>to</mat-label>
+                            <mat-select formControlName="to">
+                                <mat-option *ngFor="let investment of filterInvestments(selectedConfig.to.filter)"
+                                    [value]="investment">{{ investment.getTitle() }} - {{
+                                    investment.getMember().getName() }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Please select to account</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="submit" mat-raised-button color="primary"
+                            [disabled]="!this.detailsForm.valid">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-xs-12">
+        <form [formGroup]="newTransactionsForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-xs-12">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Paste Transactions</mat-label>
+                        <textarea type="text" matInput formControlName="transactions" cdkTextareaAutosize></textarea>
+                        <mat-error>Please enter a valid details</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="submit" mat-raised-button color="primary"
+                        [disabled]="!this.newTransactionsForm.valid">Add Transactions</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
