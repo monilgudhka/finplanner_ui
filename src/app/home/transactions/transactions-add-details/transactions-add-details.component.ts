@@ -22,6 +22,7 @@ export interface TransactionTypeConfig {
   displayOnCredit: boolean
   from: TransactionTypeAccountConfig,
   to: TransactionTypeAccountConfig,
+  postProcess?: (newTransaction: NewTransactionDto) => void
 }
 
 @Component({
@@ -128,7 +129,8 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
         to: {
           enable: true,
           filter: this.isBankAccounts
-        }
+        },
+        postProcess: this.convertCashbackToExpense
       }
     ];
 
@@ -179,6 +181,13 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
+  private convertCashbackToExpense(newTransaction: NewTransactionDto): void {
+    newTransaction.transaction_type = 'EXPENSE';
+    newTransaction.amount = (-1) * newTransaction.amount;
+    newTransaction.from_account = newTransaction.to_account;
+    newTransaction.to_account = undefined;
+  }
+
   filterTransactionTypeConfig() {
     return this.transactionTypeConfigList
       .filter(t => this.transaction.isDebit ? t.displayOnDebit : t.displayOnCredit);
@@ -212,6 +221,9 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
     }
     if (this.selectedConfig.to.enable) {
       this.transaction.to_account = this.detailsForm.value.to.getGrowth().getId();
+    }
+    if (this.selectedConfig.postProcess !== undefined) {
+      this.selectedConfig.postProcess(this.transaction);
     }
   }
 
