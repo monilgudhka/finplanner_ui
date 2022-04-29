@@ -58,7 +58,7 @@ export class TransactionsAddComponent implements OnInit {
   }
 
   private formatAmount(amount: string): number {
-    return parseInt(amount.replace(/,/g, ''));
+    return parseFloat(amount.replace(/,/g, ''));
   }
 
 }
