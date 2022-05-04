@@ -97,11 +97,26 @@ export class TransactionsAddDetailsComponent implements OnInit, OnDestroy {
         displayOnCredit: false,
         displayOnDebit: true,
         from: {
-          enable: true
+          enable: true,
+          filter: this.isBankAccounts
         },
         to: {
           enable: true,
           filter: this.isNonBankAccounts
+        }
+      },
+      {
+        name: 'INVESTMENT',
+        title: 'Redeem',
+        displayOnCredit: true,
+        displayOnDebit: false,
+        from: {
+          enable: true,
+          filter: this.isNonBankAccounts
+        },
+        to: {
+          enable: true,
+          filter: this.isBankAccounts
         }
       },
       {
